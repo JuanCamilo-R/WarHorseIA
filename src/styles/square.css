@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.horseIcon {
+.squareIcon {
   width: calc(min(6vw, 6vh));
   height: calc(min(6vw, 6vh));
   min-width: 40px;
