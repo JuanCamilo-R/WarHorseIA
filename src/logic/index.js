@@ -1,12 +1,12 @@
 world = [
-  [1, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 1, 0, 1, 1, 0],
-  [1, 1, 1, 1, 0, 1, 1, 1],
-  [0, 0, 0, 0, 0, 1, 1, 1],
-  [2, 1, 1, 1, 0, 0, 0, 0],
-  [0, 4, 0, 1, 4, 1, 1, 1],
-  [0, 1, 0, 0, 0, 1, 1, 5],
-  [0, 1, 1, 0, 5, 1, 1, 1],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 1, 0, 0, 0, 0],
+  [0, 0, 3, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 2, 0],
 ];
 class Node {
   EMPTY = 0;
@@ -29,9 +29,10 @@ class Node {
     this.heuristic = 0; // The correct value is given only when the greedy algorithm is used
     this.bonus = false;
     this.type = " "; //max or min
+    this.weight; //valor inicial: infinity o -inifinity
   }
 
-  getStateWW() {
+  getStateW() {
     return this.stateW;
   }
 
@@ -219,10 +220,10 @@ class Node {
   }
 
   move(posHorse) {
-    iOld = posHorse[0];
-    jOld = posHorse[1];
-    iNew = this.getHorsePosRed()[0];
-    iNew = this.getHorsePosRed()[1];
+    var iOld = posHorse[0];
+    var jOld = posHorse[1];
+    var iNew = this.getHorsePosRed()[0];
+    var jNew = this.getHorsePosRed()[1];
     this.stateW[iOld][jOld] = this.RED; //casilla roja
     this.stateW[iNew][jNew] = this.REDHORSE; //caballo rojo
     return this;
@@ -241,11 +242,13 @@ class DepthAlgorithm {
   }
 
   recorrido(arr) {
-    num = 0;
-    while (arr.lenght != num) {
-      arr[o].getStateWW();
+    var num = 0;
+    var state = [];
+    do {
+      state.push(arr[num].getStateW());
       num++;
-    }
+    } while (arr.length - 1 != num - 1);
+    return state;
   }
 
   start() {
@@ -258,12 +261,13 @@ class DepthAlgorithm {
     var nivelGame = 0;
     var arrayComplete = [];
     arrayComplete.push(currentNode);
+
     while (!(nivelGame == this.nivel)) {
-      console.log("---");
+      // //console.log("---");
       if (nivelGame % 2 == 0) {
-        console.log(currentNode.getHorsePosRed());
+        ////console.log(currentNode.getHorsePosRed());
       } else {
-        console.log(currentNode.getHorsePosGreen());
+        ////console.log(currentNode.getHorsePosGreen());
       }
 
       stack.shift();
@@ -273,35 +277,33 @@ class DepthAlgorithm {
       //tablero de 8*8, el anterior era e 10*10
 
       if (nivelGame % 2 == 0) {
+        console.log("aqui si");
         //le toca al computador
         //One
 
-        /*
-         
-        */
         if (
           !(horsePosRed[0] - 2 < 0) &&
           !(horsePosRed[1] - 1 < 0) &&
-          (currentNode.getStateW()[horsePosRed[0] - 2],
-          [horsePosRed[1] - 1] == 0 ||
-            currentNode.getStateW()[horsePosRed[0] - 2],
-          [horsePosRed[1] - 1] == 3)
+          (currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] - 1] ==
+            0 ||
+            currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] - 1] ==
+              3)
         ) {
-          son = Node(
+          console.log("siOne");
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "one",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosRed[0] - 2],
-            [horsePosRed[1] - 1] == 3)
+            currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] - 1] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          one = son.oneMovement(horsePosRed);
+          var one = son.oneMovement(horsePosRed);
           son.sethorsePosRed(one);
           son.move(horsePosRed);
 
@@ -309,7 +311,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosRed());
+            //console.log(son.getHorsePosRed());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           if (son.getDepth() == this.nivel) {
@@ -320,26 +322,25 @@ class DepthAlgorithm {
         if (
           !(horsePosRed[0] - 2 < 0) &&
           !(horsePosRed[1] + 1 > 7) &&
-          (currentNode.getStateW()[horsePosRed[0] - 2],
-          [horsePosRed[1] + 1] == 0 ||
-            currentNode.getStateW()[horsePosRed[0] - 2],
-          [horsePosRed[1] + 1] == 3)
+          (currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] + 1] ==
+            0 ||
+            currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] + 1] ==
+              3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "two",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosRed[0] - 2],
-            [horsePosRed[1] + 1] == 3)
+            currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] + 1] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          two = son.twoMovement(horsePosRed);
+          var two = son.twoMovement(horsePosRed);
           son.sethorsePosRed(two);
           son.move(horsePosRed);
 
@@ -347,7 +348,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosRed());
+            //console.log(son.getHorsePosRed());
           }
         }
 
@@ -355,26 +356,25 @@ class DepthAlgorithm {
         if (
           !(horsePosRed[0] - 1 < 0) &&
           !(horsePosRed[1] + 2 > 7) &&
-          (currentNode.getStateW()[horsePosRed[0] - 1],
-          [horsePosRed[1] + 2] == 0 ||
-            currentNode.getStateW()[horsePosRed[0] - 1],
-          [horsePosRed[1] + 2] == 3)
+          (currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] + 2] ==
+            0 ||
+            currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] + 2] ==
+              3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "three",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosRed[0] - 1],
-            [horsePosRed[1] + 2] == 3)
+            currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] + 2] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          three = son.threeMovement(horsePosRed);
+          var three = son.threeMovement(horsePosRed);
           son.sethorsePosRed(three);
           son.move(horsePosRed);
 
@@ -382,7 +382,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosRed());
+            //console.log(son.getHorsePosRed());
           }
         }
 
@@ -390,26 +390,25 @@ class DepthAlgorithm {
         if (
           !(horsePosRed[0] + 1 > 7) &&
           !(horsePosRed[1] + 2 > 7) &&
-          (currentNode.getStateW()[horsePosRed[0] + 1],
-          [horsePosRed[1] + 2] == 0 ||
-            currentNode.getStateW()[horsePosRed[0] + 1],
-          [horsePosRed[1] + 2] == 3)
+          (currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] + 2] ==
+            0 ||
+            currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] + 2] ==
+              3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "four",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosRed[0] + 1],
-            [horsePosRed[1] + 2] == 3)
+            currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] + 2] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          four = son.fourMovement(horsePosRed);
+          var four = son.fourMovement(horsePosRed);
           son.sethorsePosRed(four);
           son.move(horsePosRed);
 
@@ -417,33 +416,32 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosRed());
+            //console.log(son.getHorsePosRed());
           }
         }
         //Five
         if (
           !(horsePosRed[0] + 2 > 7) &&
           !(horsePosRed[1] + 1 > 7) &&
-          (currentNode.getStateW()[horsePosRed[0] + 2],
-          [horsePosRed[1] + 1] == 0 ||
-            currentNode.getStateW()[horsePosRed[0] + 2],
-          [horsePosRed[1] + 1] == 3)
+          (currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] + 1] ==
+            0 ||
+            currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] + 1] ==
+              3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "five",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosRed[0] + 2],
-            [horsePosRed[1] + 1] == 3)
+            currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] + 1] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          five = son.fiveMovement(horsePosRed);
+          var five = son.fiveMovement(horsePosRed);
           son.sethorsePosRed(five);
           son.move(horsePosRed);
 
@@ -451,7 +449,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosRed());
+            //console.log(son.getHorsePosRed());
           }
         }
 
@@ -459,26 +457,25 @@ class DepthAlgorithm {
         if (
           !(horsePosRed[0] + 2 > 7) &&
           !(horsePosRed[1] - 1 < 0) &&
-          (currentNode.getStateW()[horsePosRed[0] + 2],
-          [horsePosRed[1] - 1] == 0 ||
-            currentNode.getStateW()[horsePosRed[0] + 2],
-          [horsePosRed[1] - 1] == 3)
+          (currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] - 1] ==
+            0 ||
+            currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] - 1] ==
+              3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "six",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosRed[0] + 2],
-            [horsePosRed[1] - 1] == 3)
+            currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] - 1] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          six = son.sixMovement(horsePosRed);
+          var six = son.sixMovement(horsePosRed);
           son.sethorsePosRed(six);
           son.move(horsePosRed);
 
@@ -486,33 +483,32 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosRed());
+            //console.log(son.getHorsePosRed());
           }
         }
         //Seven
         if (
           !(horsePosRed[0] + 1 > 7) &&
           !(horsePosRed[1] - 2 < 0) &&
-          (currentNode.getStateW()[horsePosRed[0] + 1],
-          [horsePosRed[1] - 2] == 0 ||
-            currentNode.getStateW()[horsePosRed[0] + 1],
-          [horsePosRed[1] - 2] == 3)
+          (currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] - 2] ==
+            0 ||
+            currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] - 2] ==
+              3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "seven",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosRed[0] + 1],
-            [horsePosRed[1] - 2] == 3)
+            currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] - 2] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          seven = son.sevenMovement(horsePosRed);
+          var seven = son.sevenMovement(horsePosRed);
           son.sethorsePosRed(seven);
           son.move(horsePosRed);
 
@@ -520,7 +516,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosRed());
+            //console.log(son.getHorsePosRed());
           }
         }
 
@@ -528,26 +524,25 @@ class DepthAlgorithm {
         if (
           !(horsePosRed[0] - 1 < 0) &&
           !(horsePosRed[1] - 2 < 0) &&
-          (currentNode.getStateW()[horsePosRed[0] - 1],
-          [horsePosRed[1] - 2] == 0 ||
-            currentNode.getStateW()[horsePosRed[0] - 1],
-          [horsePosRed[1] - 2] == 3)
+          (currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] - 2] ==
+            0 ||
+            currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] - 2] ==
+              3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "eight",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosRed[0] - 1],
-            [horsePosRed[1] - 2] == 3)
+            currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] - 2] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          eight = son.eightMovement(horsePosRed);
+          var eight = son.eightMovement(horsePosRed);
           son.sethorsePosRed(eight);
           son.move(horsePosRed);
 
@@ -555,35 +550,39 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosRed());
+            //console.log(son.getHorsePosRed());
           }
         }
       } else {
         //le toca al humano
         //One
+        console.log("aqui no");
         if (
           !(horsePosGreen[0] - 2 < 0) &&
           !(horsePosGreen[1] - 1 < 0) &&
-          (currentNode.getStateW()[horsePosGreen[0] - 2],
-          [horsePosGreen[1] - 1] == 0 ||
-            currentNode.getStateW()[horsePosGreen[0] - 2],
-          [horsePosGreen[1] - 1] == 3)
+          (currentNode.getStateW()[horsePosGreen[0] - 2][
+            horsePosGreen[1] - 1
+          ] == 0 ||
+            currentNode.getStateW()[horsePosGreen[0] - 2][
+              horsePosGreen[1] - 1
+            ] == 3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "one",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosGreen[0] - 2],
-            [horsePosGreen[1] - 1] == 3)
+            currentNode.getStateW()[horsePosGreen[0] - 2][
+              horsePosGreen[1] - 1
+            ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          one = son.oneMovement(horsePosGreen);
+          var one = son.oneMovement(horsePosGreen);
           son.sethorsePosGreen(one);
           son.move(horsePosGreen);
 
@@ -591,7 +590,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosGreen());
+            //console.log(son.getHorsePosGreen());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           if (son.getDepth() == this.nivel) {
@@ -602,26 +601,29 @@ class DepthAlgorithm {
         if (
           !(horsePosGreen[0] - 2 < 0) &&
           !(horsePosGreen[1] + 1 > 7) &&
-          (currentNode.getStateW()[horsePosGreen[0] - 2],
-          [horsePosGreen[1] + 1] == 0 ||
-            currentNode.getStateW()[horsePosGreen[0] - 2],
-          [horsePosGreen[1] + 1] == 3)
+          (currentNode.getStateW()[horsePosGreen[0] - 2][
+            horsePosGreen[1] + 1
+          ] == 0 ||
+            currentNode.getStateW()[horsePosGreen[0] - 2][
+              horsePosGreen[1] + 1
+            ] == 3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "two",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosGreen[0] - 2],
-            [horsePosGreen[1] + 1] == 3)
+            currentNode.getStateW()[horsePosGreen[0] - 2][
+              horsePosGreen[1] + 1
+            ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          two = son.twoMovement(horsePosGreen);
+          var two = son.twoMovement(horsePosGreen);
           son.sethorsePosGreen(two);
           son.move(horsePosGreen);
 
@@ -629,7 +631,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosGreen());
+            //console.log(son.getHorsePosGreen());
           }
         }
 
@@ -637,26 +639,29 @@ class DepthAlgorithm {
         if (
           !(horsePosGreen[0] - 1 < 0) &&
           !(horsePosGreen[1] + 2 > 7) &&
-          (currentNode.getStateW()[horsePosGreen[0] - 1],
-          [horsePosGreen[1] + 2] == 0 ||
-            currentNode.getStateW()[horsePosGreen[0] - 1],
-          [horsePosGreen[1] + 2] == 3)
+          (currentNode.getStateW()[horsePosGreen[0] - 1][
+            horsePosGreen[1] + 2
+          ] == 0 ||
+            currentNode.getStateW()[horsePosGreen[0] - 1][
+              horsePosGreen[1] + 2
+            ] == 3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "three",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosGreen[0] - 1],
-            [horsePosGreen[1] + 2] == 3)
+            currentNode.getStateW()[horsePosGreen[0] - 1][
+              horsePosGreen[1] + 2
+            ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          three = son.threeMovement(horsePosGreen);
+          var three = son.threeMovement(horsePosGreen);
           son.sethorsePosGreen(three);
           son.move(horsePosGreen);
 
@@ -664,7 +669,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosGreen());
+            //console.log(son.getHorsePosGreen());
           }
         }
 
@@ -672,26 +677,29 @@ class DepthAlgorithm {
         if (
           !(horsePosGreen[0] + 1 > 7) &&
           !(horsePosGreen[1] + 2 > 7) &&
-          (currentNode.getStateW()[horsePosGreen[0] + 1],
-          [horsePosGreen[1] + 2] == 0 ||
-            currentNode.getStateW()[horsePosGreen[0] + 1],
-          [horsePosGreen[1] + 2] == 3)
+          (currentNode.getStateW()[horsePosGreen[0] + 1][
+            horsePosGreen[1] + 2
+          ] == 0 ||
+            currentNode.getStateW()[horsePosGreen[0] + 1][
+              horsePosGreen[1] + 2
+            ] == 3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "four",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosGreen[0] + 1],
-            [horsePosGreen[1] + 2] == 3)
+            currentNode.getStateW()[horsePosGreen[0] + 1][
+              horsePosGreen[1] + 2
+            ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          four = son.fourMovement(horsePosGreen);
+          var four = son.fourMovement(horsePosGreen);
           son.sethorsePosGreen(four);
           son.move(horsePosGreen);
 
@@ -699,33 +707,36 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosGreen());
+            //console.log(son.getHorsePosGreen());
           }
         }
         //Five
         if (
           !(horsePosGreen[0] + 2 > 7) &&
           !(horsePosGreen[1] + 1 > 7) &&
-          (currentNode.getStateW()[horsePosGreen[0] + 2],
-          [horsePosGreen[1] + 1] == 0 ||
-            currentNode.getStateW()[horsePosGreen[0] + 2],
-          [horsePosGreen[1] + 1] == 3)
+          (currentNode.getStateW()[horsePosGreen[0] + 2][
+            horsePosGreen[1] + 1
+          ] == 0 ||
+            currentNode.getStateW()[horsePosGreen[0] + 2][
+              horsePosGreen[1] + 1
+            ] == 3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "five",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosGreen[0] + 2],
-            [horsePosGreen[1] + 1] == 3)
+            currentNode.getStateW()[horsePosGreen[0] + 2][
+              horsePosGreen[1] + 1
+            ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          five = son.fiveMovement(horsePosGreen);
+          var five = son.fiveMovement(horsePosGreen);
           son.sethorsePosGreen(five);
           son.move(horsePosGreen);
 
@@ -733,7 +744,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosGreen());
+            //console.log(son.getHorsePosGreen());
           }
         }
 
@@ -741,12 +752,14 @@ class DepthAlgorithm {
         if (
           !(horsePosGreen[0] + 2 > 7) &&
           !(horsePosGreen[1] - 1 < 0) &&
-          (currentNode.getStateW()[horsePosGreen[0] + 2],
-          [horsePosGreen[1] - 1] == 0 ||
-            currentNode.getStateW()[horsePosGreen[0] + 2],
-          [horsePosGreen[1] - 1] == 3)
+          (currentNode.getStateW()[horsePosGreen[0] + 2][
+            horsePosGreen[1] - 1
+          ] == 0 ||
+            currentNode.getStateW()[horsePosGreen[0] + 2][
+              horsePosGreen[1] - 1
+            ] == 3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "six",
@@ -760,7 +773,7 @@ class DepthAlgorithm {
             //poner bonos en True
           }
 
-          six = son.sixMovement(horsePosGreen);
+          var six = son.sixMovement(horsePosGreen);
           son.sethorsePosGreen(six);
           son.move(horsePosGreen);
 
@@ -768,33 +781,36 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosGreen());
+            //console.log(son.getHorsePosGreen());
           }
         }
         //Seven
         if (
           !(horsePosGreen[0] + 1 > 7) &&
           !(horsePosGreen[1] - 2 < 0) &&
-          (currentNode.getStateW()[horsePosGreen[0] + 1],
-          [horsePosGreen[1] - 2] == 0 ||
-            currentNode.getStateW()[horsePosGreen[0] + 1],
-          [horsePosGreen[1] - 2] == 3)
+          (currentNode.getStateW()[horsePosGreen[0] + 1][
+            horsePosGreen[1] - 2
+          ] == 0 ||
+            currentNode.getStateW()[horsePosGreen[0] + 1][
+              horsePosGreen[1] - 2
+            ] == 3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "seven",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosGreen[0] + 1],
-            [horsePosGreen[1] - 2] == 3)
+            currentNode.getStateW()[horsePosGreen[0] + 1][
+              horsePosGreen[1] - 2
+            ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          seven = son.sevenMovement(horsePosGreen);
+          var seven = son.sevenMovement(horsePosGreen);
           son.sethorsePosGreen(seven);
           son.move(horsePosGreen);
 
@@ -802,7 +818,7 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosGreen());
+            //console.log(son.getHorsePosGreen());
           }
         }
 
@@ -810,26 +826,29 @@ class DepthAlgorithm {
         if (
           !(horsePosGreen[0] - 1 < 0) &&
           !(horsePosGreen[1] - 2 < 0) &&
-          (currentNode.getStateW()[horsePosGreen[0] - 1],
-          [horsePosGreen[1] - 2] == 0 ||
-            currentNode.getStateW()[horsePosGreen[0] - 1],
-          [horsePosGreen[1] - 2] == 3)
+          (currentNode.getStateW()[horsePosGreen[0] - 1][
+            horsePosGreen[1] - 2
+          ] == 0 ||
+            currentNode.getStateW()[horsePosGreen[0] - 1][
+              horsePosGreen[1] - 2
+            ] == 3)
         ) {
-          son = Node(
+          var son = new Node(
             currentNode.getStateW(),
             currentNode,
             "eight",
             currentNode.getDepth() + 1
           );
           if (
-            (currentNode.getStateW()[horsePosGreen[0] - 1],
-            [horsePosGreen[1] - 2] == 3)
+            currentNode.getStateW()[horsePosGreen[0] - 1][
+              horsePosGreen[1] - 2
+            ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
           }
 
-          eight = son.eightMovement(horsePosGreen);
+          var eight = son.eightMovement(horsePosGreen);
           son.sethorsePosGreen(eight);
           son.move(horsePosGreen);
 
@@ -837,19 +856,23 @@ class DepthAlgorithm {
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            console.log(son.getHorsePosGreen());
+            //console.log(son.getHorsePosGreen());
           }
         }
       }
+      nivelGame++;
     }
     //solution = currentNode.recreateSolutionWorld();
     //solutionWorld = solution.reverse();
-    completo = this.recorrido(arrayComplete);
+
+    var completo = this.recorrido(arrayComplete);
+    console.log(arrayComplete.length);
     console.log(completo);
-    console.log("exp&&ido", expandedNodes + 1); // Good
-    console.log("profundidad", depth);
-    //console.log(stack[0].recreateSolution());
-    return solutionWorld;
+
+    //console.log("exp&&ido", expandedNodes + 1); // Good
+    //console.log("profundidad", depth);
+    ////console.log(stack[0].recreateSolution());
+    //return solutionWorld;
   }
 }
 
