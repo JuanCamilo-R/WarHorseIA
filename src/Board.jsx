@@ -70,7 +70,7 @@ class Board extends React.Component {
 
         const squares = Array(GRIDHEIGHT * GRIDWIDTH).fill(['', 'free']);
         squares[greenPlayerPos] = ['horse', 'green'];
-        squares[redPlayerPos] = ['horse', 'green'];
+        squares[redPlayerPos] = ['horse', 'red'];
         squares[bonusesPositions[0]] = ['bonus', 'free'];
         squares[bonusesPositions[1]] = ['bonus', 'free'];
         squares[bonusesPositions[2]] = ['bonus', 'free'];

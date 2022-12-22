@@ -2,7 +2,7 @@ import './styles/square.css';
 import horseIcon from './assets/knight.png';
 import bonusIcon from './assets/bonus.png';
 
-export const Square = ({id, type, status, onClick}) => {
+export const Square = ({ id, type, status, onClick }) => {
 
     const cursor = type === 'horse' ? 'pointer' : '';
 
@@ -28,9 +28,9 @@ export const Square = ({id, type, status, onClick}) => {
             case '':
                 return <></>;
             case 'horse':
-                return <img className="squareIcon" alt="Hourse" src={horseIcon}/>;
+                return <img className="squareIcon" alt="Hourse" src={horseIcon} />;
             case 'bonus':
-                return <img className="squareIcon" alt="Hourse" src={bonusIcon}/>;
+                return <img className="squareIcon" alt="Bonus" src={bonusIcon} />;
             default:
                 return <></>;
         }
