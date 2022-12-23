@@ -16,14 +16,15 @@ export class Node {
     this.countColorsGreen = 0;
     this.horsePosRed = [];
     this.horsePosGreen = [];
-    this.heuristic = 0; // The correct value is given only when the greedy algorithm is used
+    this.heuristic = 0; // para el nodo final
     this.bonus = false;
     this.type = " "; //max or min
     this.weight; //valor inicial: infinity o -inifinity
   }
 
   getStateW() {
-    return this.stateW;
+    var copy = Array.from(this.stateW);
+    return copy;
   }
 
   getFather() {
@@ -119,7 +120,9 @@ export class Node {
   }
 
   sethorsePosRed(newhorsePosRed) {
+    console.log(newhorsePosRed);
     this.horsePosRed = newhorsePosRed;
+    console.log(this.horsePosRed);
   }
 
   sethorsePosGreen(newhorsePosGreen) {
@@ -144,12 +147,13 @@ export class Node {
 
     for (var i = 0; i < 8; i++)
       for (var j = 0; j < 8; j++)
-        if (stateW[i][j] == this.REDHORSE) {
+        if (stateW[i][j] == 1) {
           horsePosRed[0] = i;
           horsePosRed[1] = j;
         }
 
     this.sethorsePosRed(horsePosRed);
+    console.log(horsePosRed);
     return horsePosRed;
   }
 
@@ -158,12 +162,13 @@ export class Node {
     var stateW = this.stateW;
     for (var i = 0; i < 8; i++)
       for (var j = 0; j < 8; j++)
-        if (stateW[i][j] == this.GREENHORSE) {
+        if (stateW[i][j] == 2) {
           horsePosGreen[0] = i;
           horsePosGreen[1] = j;
         }
 
     this.sethorsePosGreen(horsePosGreen);
+    console.log(horsePosGreen);
     return horsePosGreen;
   }
 
@@ -214,8 +219,13 @@ export class Node {
     var jOld = posHorse[1];
     var iNew = this.getHorsePosRed()[0];
     var jNew = this.getHorsePosRed()[1];
-    this.stateW[iOld][jOld] = this.RED; //casilla roja
-    this.stateW[iNew][jNew] = this.REDHORSE; //caballo rojo
+    this.stateW[iOld][jOld] = 4; //casilla roja
+    this.stateW[iNew][jNew] = 1; //caballo rojo
+    console.log(iOld);
+    console.log(jOld);
+    console.log(iNew);
+    console.log(jNew);
+    console.log(this.stateW);
     return this;
   }
 }

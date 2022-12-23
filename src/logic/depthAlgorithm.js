@@ -8,6 +8,8 @@ export class DepthAlgorithm {
     this.stack = [this.firstNode];
     this.computingTime = "";
     this.nivel = nivel;
+    console.log("constructor");
+    console.log(world);
   }
 
   recorrido(arr) {
@@ -48,6 +50,9 @@ export class DepthAlgorithm {
       if (nivelGame % 2 == 0) {
         console.log("aqui si");
         //le toca al computador
+
+        console.log(horsePosRed[0]);
+        console.log(horsePosRed[1]);
         //One
 
         if (
@@ -59,6 +64,8 @@ export class DepthAlgorithm {
               3)
         ) {
           console.log("siOne");
+          console.log(horsePosRed[0] - 2);
+          console.log(horsePosRed[1] - 1);
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -96,6 +103,9 @@ export class DepthAlgorithm {
             currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] + 1] ==
               3)
         ) {
+          console.log("siTwo");
+          console.log(horsePosRed[0] - 2);
+          console.log(horsePosRed[1] + 1);
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -130,6 +140,9 @@ export class DepthAlgorithm {
             currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] + 2] ==
               3)
         ) {
+          console.log("siThree");
+          console.log(horsePosRed[0] - 1);
+          console.log(horsePosRed[1] + 2);
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -164,6 +177,9 @@ export class DepthAlgorithm {
             currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] + 2] ==
               3)
         ) {
+          console.log("siFour");
+          console.log(horsePosRed[0] + 1);
+          console.log(horsePosRed[1] + 2);
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -197,6 +213,9 @@ export class DepthAlgorithm {
             currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] + 1] ==
               3)
         ) {
+          console.log("siFive");
+          console.log(horsePosRed[0] + 2);
+          console.log(horsePosRed[1] + 1);
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -231,6 +250,9 @@ export class DepthAlgorithm {
             currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] - 1] ==
               3)
         ) {
+          console.log("siSix");
+          console.log(horsePosRed[0] + 2);
+          console.log(horsePosRed[1] - 1);
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -264,6 +286,9 @@ export class DepthAlgorithm {
             currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] - 2] ==
               3)
         ) {
+          console.log("siSeven");
+          console.log(horsePosRed[0] + 1);
+          console.log(horsePosRed[1] - 2);
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -298,6 +323,9 @@ export class DepthAlgorithm {
             currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] - 2] ==
               3)
         ) {
+          console.log("siEight");
+          console.log(horsePosRed[0] - 1);
+          console.log(horsePosRed[1] - 2);
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
