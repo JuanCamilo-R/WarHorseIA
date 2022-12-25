@@ -4,14 +4,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: calc(max(0.74vw, 10px));
+  gap: max(0.74vw, 10px);
 }
 
 .title {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-style: normal;
   font-weight: 700;
-  font-size: calc(max(4.5vmin, 1.75em));
+  font-size: max(4.5vmin, 1.75em);
   color: #111111;
 }
 
@@ -20,7 +20,7 @@
   position: relative;
   flex-direction: row;
   justify-content: center;
-  gap: 0.74vw;
+  gap: max(0.74vw, 8px);
 }
 
 .board {
@@ -28,19 +28,18 @@
   position: relative;
   flex-direction: column;
   text-align: center;
-  gap: 0.74vw;
-  background: #c6d6e9;
-  padding: 0.74vw;
-  border-radius: 0.74vw;
+  gap: max(0.74vw, 8px);
+  background: #C6D6E9;
+  padding: max(0.74vw, 8px);
+  border-radius: max(0.74vw, 8px);
 }
 
 .appBody {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
   height: 100%;
-  gap: calc(max(0.74vw, 10px));
+  gap: max(0.74vw, 10px);
   flex-wrap: wrap;
 }
 
@@ -48,6 +47,6 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-style: normal;
   font-weight: 500;
-  font-size: calc(max(2.6vmin, 1em));
+  font-size: max(2.6vmin, 1em);
   color: #111111;
 }

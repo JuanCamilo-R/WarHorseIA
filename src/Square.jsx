@@ -2,9 +2,9 @@ import './styles/square.css';
 import horseIcon from './assets/knight.png';
 import bonusIcon from './assets/bonus.png';
 
-export const Square = ({ id, type, status, onClick }) => {
+export const Square = ({ type, status, onClick }) => {
 
-    const cursor = type === 'horse' ? 'pointer' : '';
+    const cursor = (type === 'horse' && status === 'green') ? 'pointer' : '';
 
     // Changes the color of the square according to its status.
     const squareColor = (status) => {
@@ -29,6 +29,8 @@ export const Square = ({ id, type, status, onClick }) => {
                 return <></>;
             case 'horse':
                 return <img className="squareIcon" alt="Hourse" src={horseIcon} />;
+            case 'horse-selected':
+                return <img className="squareIcon" alt="Hourse" src={horseIcon} />;
             case 'bonus':
                 return <img className="squareIcon" alt="Bonus" src={bonusIcon} />;
             default:
@@ -36,13 +38,26 @@ export const Square = ({ id, type, status, onClick }) => {
         }
     };
 
+    // Decides the name of the style according to the type of square.
+    const className = (type, status) => {
+        if (type === 'horse-selected') {
+            return 'horseSquareSelected';
+        }
+
+        if (status === 'free-dark') {
+            return 'freeDarkSquare';
+        }
+
+        return 'square';
+    };
+
     return (
         <div
-            className="square"
+            className={className(type, status)}
             onClick={onClick}
             style={{
                 background: squareColor(status),
-                border: '1px solid' + squareColor(status),
+
                 cursor: cursor,
             }}
         >
