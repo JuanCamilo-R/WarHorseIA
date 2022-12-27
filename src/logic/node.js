@@ -11,23 +11,29 @@ export class Node {
     this.father = father;
     this.operator = operator;
     this.depth = depth;
-    this.optionsMove = 0;
+    this.optionsMoveRed = 0;
+    this.optionsMoveGreen = 0;
     this.countColorsRed = 0;
     this.countColorsGreen = 0;
     this.horsePosRed = [];
     this.horsePosGreen = [];
-    this.heuristic = 0; // The correct value is given only when the greedy algorithm is used
+    this.heuristic = 0; // para el nodo final,  No lo estoy usando
     this.bonus = false;
     this.type = " "; //max or min
-    this.weight; //valor inicial: infinity o -inifinity
+    this.weight; //valor inicial: infinity o -inifinity, si el ultimo le pongo el valor de la heuristica
   }
 
   getStateW() {
-    return this.stateW;
+    let copy = Array.from(this.stateW);
+    return copy;
   }
 
   getFather() {
     return this.father;
+  }
+
+  getWeight() {
+    return this.weight;
   }
 
   getOperator() {
@@ -50,12 +56,12 @@ export class Node {
     return this.horsePosGreen;
   }
 
-  getStateW() {
-    return this.stateW;
+  getoptionsMoveRed() {
+    return this.optionsMoveRed;
   }
 
-  getOptionsMove() {
-    return this.optionsMove;
+  getoptionsMoveGreen() {
+    return this.optionsMoveGreen;
   }
 
   getBonus() {
@@ -94,6 +100,10 @@ export class Node {
     this.father = newFather;
   }
 
+  setWeight(newWeight) {
+    this.weight = newWeight;
+  }
+
   setOperator(newOperator) {
     this.operator = newOperator;
   }
@@ -102,8 +112,12 @@ export class Node {
     this.depth = newDepth;
   }
 
-  setOptionsMove(newOptionsMove) {
-    this.optionsMove = newOptionsMove;
+  setoptionsMoveRed(newoptionsMoveRed) {
+    this.optionsMoveRed = newoptionsMoveRed;
+  }
+
+  setoptionsMoveGreen(newoptionsMoveGreen) {
+    this.optionsMoveGreen = newoptionsMoveGreen;
   }
 
   setCountColorsRed(newCountColorsRed) {
@@ -119,7 +133,9 @@ export class Node {
   }
 
   sethorsePosRed(newhorsePosRed) {
+    console.log(newhorsePosRed);
     this.horsePosRed = newhorsePosRed;
+    console.log(this.horsePosRed);
   }
 
   sethorsePosGreen(newhorsePosGreen) {
@@ -128,9 +144,9 @@ export class Node {
 
   isGoal() {
     stateW = this.stateW;
-    for (var i = 0; i < 10; i++)
-      for (var j = 0; j < 10; j++)
-        if (state[i][j] == 0 || state[i][j] == 3) return false;
+    for (let i = 0; i < 10; i++)
+      for (let j = 0; j < 10; j++)
+        if (stateW[i][j] == 0 || stateW[i][j] == 3) return false;
     return true;
   }
 
@@ -139,31 +155,33 @@ export class Node {
   }
 
   searchForHorseRed() {
-    var horsePosRed = [-1, -1]; // Mario position [x,y]
-    var stateW = this.stateW;
+    let horsePosRed = [-1, -1]; // Mario position [x,y]
+    let stateW = this.stateW;
 
-    for (var i = 0; i < 8; i++)
-      for (var j = 0; j < 8; j++)
-        if (stateW[i][j] == this.REDHORSE) {
+    for (let i = 0; i < 8; i++)
+      for (let j = 0; j < 8; j++)
+        if (stateW[i][j] == 1) {
           horsePosRed[0] = i;
           horsePosRed[1] = j;
         }
 
     this.sethorsePosRed(horsePosRed);
+    console.log(horsePosRed);
     return horsePosRed;
   }
 
   searchForHorseGreen() {
-    var horsePosGreen = [-1, -1]; // Mario position [x,y]
-    var stateW = this.stateW;
-    for (var i = 0; i < 8; i++)
-      for (var j = 0; j < 8; j++)
-        if (stateW[i][j] == this.GREENHORSE) {
+    let horsePosGreen = [-1, -1]; // Mario position [x,y]
+    let stateW = this.stateW;
+    for (let i = 0; i < 8; i++)
+      for (let j = 0; j < 8; j++)
+        if (stateW[i][j] == 2) {
           horsePosGreen[0] = i;
           horsePosGreen[1] = j;
         }
 
     this.sethorsePosGreen(horsePosGreen);
+    console.log(horsePosGreen);
     return horsePosGreen;
   }
 
@@ -209,13 +227,380 @@ export class Node {
     return [posHorse[0] - 1, posHorse[1] - 2];
   }
 
-  move(posHorse) {
-    var iOld = posHorse[0];
-    var jOld = posHorse[1];
-    var iNew = this.getHorsePosRed()[0];
-    var jNew = this.getHorsePosRed()[1];
-    this.stateW[iOld][jOld] = this.RED; //casilla roja
-    this.stateW[iNew][jNew] = this.REDHORSE; //caballo rojo
+  moveRed(posHorse) {
+    let iOld = posHorse[0];
+    let jOld = posHorse[1];
+    let iNew = this.getHorsePosRed()[0];
+    let jNew = this.getHorsePosRed()[1];
+    this.stateW[iOld][jOld] = 4; //casilla roja
+    this.stateW[iNew][jNew] = 1; //caballo rojo
+    console.log(iOld);
+    console.log(jOld);
+    console.log(iNew);
+    console.log(jNew);
+    console.log(this.stateW);
     return this;
+  }
+
+  moveGreen(posHorse) {
+    let iOld = posHorse[0];
+    let jOld = posHorse[1];
+    let iNew = this.getHorsePosGreen()[0];
+    let jNew = this.getHorsePosGreen()[1];
+    this.stateW[iOld][jOld] = 5; //casilla verde
+    this.stateW[iNew][jNew] = 2; //caballo verde
+    console.log(iOld);
+    console.log(jOld);
+    console.log(iNew);
+    console.log(jNew);
+    console.log(this.stateW);
+    return this;
+  }
+
+  paintBonusRed() {
+    //si coge bono cambia de color los adyacentes
+    if (
+      this.getStateW()[this.getHorsePosRed()[0] - 1][
+        this.getHorsePosRed()[1] - 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosRed()[0] - 1][
+        this.getHorsePosRed()[1] - 1
+      ] = 4;
+    }
+    if (
+      this.getStateW()[this.getHorsePosRed()[0] - 1][
+        this.getHorsePosRed()[1]
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosRed()[0] - 1][this.getHorsePosRed()[1]] = 4;
+    }
+    if (
+      this.getStateW()[this.getHorsePosRed()[0] - 1][
+        this.getHorsePosRed()[1] + 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosRed()[0] - 1][
+        this.getHorsePosRed()[1] + 1
+      ] = 4;
+    }
+    if (
+      this.getStateW()[this.getHorsePosRed()[0]][
+        this.getHorsePosRed()[1] + 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosRed()[0]][this.getHorsePosRed()[1] + 1] = 4;
+    }
+    if (
+      this.getStateW()[this.getHorsePosRed()[0] + 1][
+        this.getHorsePosRed()[1] + 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosRed()[0] + 1][
+        this.getHorsePosRed()[1] + 1
+      ] = 4;
+    }
+
+    if (
+      this.getStateW()[this.getHorsePosRed()[0] + 1][
+        this.getHorsePosRed()[1]
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosRed()[0] + 1][this.getHorsePosRed()[1]] = 4;
+    }
+
+    if (
+      this.getStateW()[this.getHorsePosRed()[0] + 1][
+        this.getHorsePosRed()[1] - 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosRed()[0] + 1][
+        this.getHorsePosRed()[1] - 1
+      ] = 4;
+    }
+
+    if (
+      this.getStateW()[this.getHorsePosRed()[0]][
+        this.getHorsePosRed()[1] - 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosRed()[0]][this.getHorsePosRed()[1] - 1] = 4;
+    }
+  }
+
+  paintBonusGreen() {
+    //si coge bono cambia de color los adyacentes
+    if (
+      this.getStateW()[this.getHorsePosGreen()[0] - 1][
+        this.getHorsePosGreen()[1] - 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosGreen()[0] - 1][
+        this.getHorsePosGreen()[1] - 1
+      ] = 4;
+    }
+    if (
+      this.getStateW()[this.getHorsePosGreen()[0] - 1][
+        this.getHorsePosGreen()[1]
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosGreen()[0] - 1][
+        this.getHorsePosGreen()[1]
+      ] = 4;
+    }
+    if (
+      this.getStateW()[this.getHorsePosGreen()[0] - 1][
+        this.getHorsePosGreen()[1] + 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosGreen()[0] - 1][
+        this.getHorsePosGreen()[1] + 1
+      ] = 4;
+    }
+    if (
+      this.getStateW()[this.getHorsePosGreen()[0]][
+        this.getHorsePosGreen()[1] + 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosGreen()[0]][
+        this.getHorsePosGreen()[1] + 1
+      ] = 4;
+    }
+    if (
+      this.getStateW()[this.getHorsePosGreen()[0] + 1][
+        this.getHorsePosGreen()[1] + 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosGreen()[0] + 1][
+        this.getHorsePosGreen()[1] + 1
+      ] = 4;
+    }
+
+    if (
+      this.getStateW()[this.getHorsePosGreen()[0] + 1][
+        this.getHorsePosGreen()[1]
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosGreen()[0] + 1][
+        this.getHorsePosGreen()[1]
+      ] = 4;
+    }
+
+    if (
+      this.getStateW()[this.getHorsePosGreen()[0] + 1][
+        this.getHorsePosGreen()[1] - 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosGreen()[0] + 1][
+        this.getHorsePosGreen()[1] - 1
+      ] = 4;
+    }
+
+    if (
+      this.getStateW()[this.getHorsePosGreen()[0]][
+        this.getHorsePosGreen()[1] - 1
+      ] == 0
+    ) {
+      this.stateW[this.getHorsePosGreen()[0]][
+        this.getHorsePosGreen()[1] - 1
+      ] = 4;
+    }
+  }
+
+  optionsMoveGreenFunc(horsePosGreen) {
+    //horsePosGreen es donde ya se movio
+    let count = 0;
+    let currentNode = this;
+    if (
+      !(horsePosGreen[0] - 2 < 0) &&
+      !(horsePosGreen[1] - 1 < 0) &&
+      (currentNode.getStateW()[horsePosGreen[0] - 2][horsePosGreen[1] - 1] ==
+        0 ||
+        currentNode.getStateW()[horsePosGreen[0] - 2][horsePosGreen[1] - 1] ==
+          3)
+    ) {
+      count++;
+    }
+    if (
+      !(horsePosGreen[0] - 2 < 0) &&
+      !(horsePosGreen[1] + 1 > 7) &&
+      (currentNode.getStateW()[horsePosGreen[0] - 2][horsePosGreen[1] + 1] ==
+        0 ||
+        currentNode.getStateW()[horsePosGreen[0] - 2][horsePosGreen[1] + 1] ==
+          3)
+    ) {
+      count++;
+    }
+    if (
+      !(horsePosGreen[0] - 1 < 0) &&
+      !(horsePosGreen[1] + 2 > 7) &&
+      (currentNode.getStateW()[horsePosGreen[0] - 1][horsePosGreen[1] + 2] ==
+        0 ||
+        currentNode.getStateW()[horsePosGreen[0] - 1][horsePosGreen[1] + 2] ==
+          3)
+    ) {
+      count++;
+    }
+    if (
+      !(horsePosGreen[0] + 1 > 7) &&
+      !(horsePosGreen[1] + 2 > 7) &&
+      (currentNode.getStateW()[horsePosGreen[0] + 1][horsePosGreen[1] + 2] ==
+        0 ||
+        currentNode.getStateW()[horsePosGreen[0] + 1][horsePosGreen[1] + 2] ==
+          3)
+    ) {
+      count++;
+    }
+
+    if (
+      !(horsePosGreen[0] + 2 > 7) &&
+      !(horsePosGreen[1] + 1 > 7) &&
+      (currentNode.getStateW()[horsePosGreen[0] + 2][horsePosGreen[1] + 1] ==
+        0 ||
+        currentNode.getStateW()[horsePosGreen[0] + 2][horsePosGreen[1] + 1] ==
+          3)
+    ) {
+      count++;
+    }
+
+    if (
+      !(horsePosGreen[0] + 2 > 7) &&
+      !(horsePosGreen[1] - 1 < 0) &&
+      (currentNode.getStateW()[horsePosGreen[0] + 2][horsePosGreen[1] - 1] ==
+        0 ||
+        currentNode.getStateW()[horsePosGreen[0] + 2][horsePosGreen[1] - 1] ==
+          3)
+    ) {
+      count++;
+    }
+
+    if (
+      !(horsePosGreen[0] + 1 > 7) &&
+      !(horsePosGreen[1] - 2 < 0) &&
+      (currentNode.getStateW()[horsePosGreen[0] + 1][horsePosGreen[1] - 2] ==
+        0 ||
+        currentNode.getStateW()[horsePosGreen[0] + 1][horsePosGreen[1] - 2] ==
+          3)
+    ) {
+      count++;
+    }
+
+    if (
+      !(horsePosGreen[0] - 1 < 0) &&
+      !(horsePosGreen[1] - 2 < 0) &&
+      (currentNode.getStateW()[horsePosGreen[0] - 1][horsePosGreen[1] - 2] ==
+        0 ||
+        currentNode.getStateW()[horsePosGreen[0] - 1][horsePosGreen[1] - 2] ==
+          3)
+    ) {
+      count++;
+    }
+    this.setCountColorsGreen(count);
+    return count;
+  }
+
+  optionsMoveRedFunc(horsePosRed) {
+    //horsePosRed es donde ya se movio
+    let count = 0;
+    let currentNode = this;
+    if (
+      !(horsePosRed[0] - 2 < 0) &&
+      !(horsePosRed[1] - 1 < 0) &&
+      (currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] - 1] == 0 ||
+        currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] - 1] == 3)
+    ) {
+      count++;
+    }
+    if (
+      !(horsePosRed[0] - 2 < 0) &&
+      !(horsePosRed[1] + 1 > 7) &&
+      (currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] + 1] == 0 ||
+        currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] + 1] == 3)
+    ) {
+      count++;
+    }
+    if (
+      !(horsePosRed[0] - 1 < 0) &&
+      !(horsePosRed[1] + 2 > 7) &&
+      (currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] + 2] == 0 ||
+        currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] + 2] == 3)
+    ) {
+      count++;
+    }
+
+    if (
+      !(horsePosRed[0] + 1 > 7) &&
+      !(horsePosRed[1] + 2 > 7) &&
+      (currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] + 2] == 0 ||
+        currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] + 2] == 3)
+    ) {
+      count++;
+    }
+
+    if (
+      !(horsePosRed[0] + 2 > 7) &&
+      !(horsePosRed[1] + 1 > 7) &&
+      (currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] + 1] == 0 ||
+        currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] + 1] == 3)
+    ) {
+      count++;
+    }
+
+    if (
+      !(horsePosRed[0] + 2 > 7) &&
+      !(horsePosRed[1] - 1 < 0) &&
+      (currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] - 1] == 0 ||
+        currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] - 1] == 3)
+    ) {
+      count++;
+    }
+
+    if (
+      !(horsePosRed[0] + 1 > 7) &&
+      !(horsePosRed[1] - 2 < 0) &&
+      (currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] - 2] == 0 ||
+        currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] - 2] == 3)
+    ) {
+      count++;
+    }
+
+    if (
+      !(horsePosRed[0] - 1 < 0) &&
+      !(horsePosRed[1] - 2 < 0) &&
+      (currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] - 2] == 0 ||
+        currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] - 2] == 3)
+    ) {
+      count++;
+    }
+    this.setCountColorsRed(count);
+    return count;
+  }
+
+  countColorsGreenFunc() {
+    //contar cuantas casillas verdes hay despues del movimiento
+    let countGreen = 0;
+    let stateW = this.stateW;
+    for (let i = 0; i < 8; i++)
+      for (let j = 0; j < 8; j++)
+        if (stateW[i][j] == 5) {
+          countGreen++;
+        }
+
+    this.setCountColorsGreen(countGreen);
+    return countGreen;
+  }
+
+  countColorsRedFunc() {
+    //contar cuantas casillas rojas hay despues del movimiento
+    let countRed = 0;
+    let stateW = this.stateW;
+    for (let i = 0; i < 8; i++)
+      for (let j = 0; j < 8; j++)
+        if (stateW[i][j] == 4) {
+          countRed++;
+        }
+
+    this.setCountColorsRed(countRed);
+    return countRed;
   }
 }
