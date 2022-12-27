@@ -51,10 +51,6 @@ export class Node {
     return this.horsePosGreen;
   }
 
-  getStateW() {
-    return this.stateW;
-  }
-
   getOptionsMove() {
     return this.optionsMove;
   }
@@ -133,7 +129,7 @@ export class Node {
     stateW = this.stateW;
     for (var i = 0; i < 10; i++)
       for (var j = 0; j < 10; j++)
-        if (state[i][j] == 0 || state[i][j] == 3) return false;
+        if (stateW[i][j] == 0 || stateW[i][j] == 3) return false;
     return true;
   }
 
@@ -214,13 +210,28 @@ export class Node {
     return [posHorse[0] - 1, posHorse[1] - 2];
   }
 
-  move(posHorse) {
+  moveRed(posHorse) {
     var iOld = posHorse[0];
     var jOld = posHorse[1];
     var iNew = this.getHorsePosRed()[0];
     var jNew = this.getHorsePosRed()[1];
     this.stateW[iOld][jOld] = 4; //casilla roja
     this.stateW[iNew][jNew] = 1; //caballo rojo
+    console.log(iOld);
+    console.log(jOld);
+    console.log(iNew);
+    console.log(jNew);
+    console.log(this.stateW);
+    return this;
+  }
+
+  moveGreen(posHorse) {
+    var iOld = posHorse[0];
+    var jOld = posHorse[1];
+    var iNew = this.getHorsePosGreen()[0];
+    var jNew = this.getHorsePosGreen()[1];
+    this.stateW[iOld][jOld] = 5; //casilla roja
+    this.stateW[iNew][jNew] = 2; //caballo rojo
     console.log(iOld);
     console.log(jOld);
     console.log(iNew);

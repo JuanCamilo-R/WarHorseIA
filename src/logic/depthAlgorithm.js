@@ -81,8 +81,10 @@ export class DepthAlgorithm {
 
           var one = son.oneMovement(horsePosRed);
           son.sethorsePosRed(one);
-          son.move(horsePosRed);
+          son.moveRed(horsePosRed);
 
+          console.log(currentNode.getStateW());
+          console.log(son.getStateW());
           stack.unshift(son);
           arrayComplete.push(son);
           if (son.getDepth() > depth) {
@@ -106,6 +108,7 @@ export class DepthAlgorithm {
           console.log("siTwo");
           console.log(horsePosRed[0] - 2);
           console.log(horsePosRed[1] + 1);
+          console.log(currentNode.getStateW());
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -121,7 +124,10 @@ export class DepthAlgorithm {
 
           var two = son.twoMovement(horsePosRed);
           son.sethorsePosRed(two);
-          son.move(horsePosRed);
+          son.moveRed(horsePosRed);
+
+          console.log(currentNode.getStateW());
+          console.log(son.getStateW());
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -143,6 +149,7 @@ export class DepthAlgorithm {
           console.log("siThree");
           console.log(horsePosRed[0] - 1);
           console.log(horsePosRed[1] + 2);
+          console.log(currentNode.getStateW());
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -158,7 +165,7 @@ export class DepthAlgorithm {
 
           var three = son.threeMovement(horsePosRed);
           son.sethorsePosRed(three);
-          son.move(horsePosRed);
+          son.moveRed(horsePosRed);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -180,6 +187,7 @@ export class DepthAlgorithm {
           console.log("siFour");
           console.log(horsePosRed[0] + 1);
           console.log(horsePosRed[1] + 2);
+          console.log(currentNode.getStateW());
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -195,7 +203,7 @@ export class DepthAlgorithm {
 
           var four = son.fourMovement(horsePosRed);
           son.sethorsePosRed(four);
-          son.move(horsePosRed);
+          son.moveRed(horsePosRed);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -216,6 +224,7 @@ export class DepthAlgorithm {
           console.log("siFive");
           console.log(horsePosRed[0] + 2);
           console.log(horsePosRed[1] + 1);
+          console.log(currentNode.getStateW());
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -231,7 +240,7 @@ export class DepthAlgorithm {
 
           var five = son.fiveMovement(horsePosRed);
           son.sethorsePosRed(five);
-          son.move(horsePosRed);
+          son.moveRed(horsePosRed);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -253,6 +262,7 @@ export class DepthAlgorithm {
           console.log("siSix");
           console.log(horsePosRed[0] + 2);
           console.log(horsePosRed[1] - 1);
+          console.log(currentNode.getStateW());
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -268,7 +278,7 @@ export class DepthAlgorithm {
 
           var six = son.sixMovement(horsePosRed);
           son.sethorsePosRed(six);
-          son.move(horsePosRed);
+          son.moveRed(horsePosRed);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -289,6 +299,7 @@ export class DepthAlgorithm {
           console.log("siSeven");
           console.log(horsePosRed[0] + 1);
           console.log(horsePosRed[1] - 2);
+          console.log(currentNode.getStateW());
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -304,7 +315,7 @@ export class DepthAlgorithm {
 
           var seven = son.sevenMovement(horsePosRed);
           son.sethorsePosRed(seven);
-          son.move(horsePosRed);
+          son.moveRed(horsePosRed);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -326,6 +337,7 @@ export class DepthAlgorithm {
           console.log("siEight");
           console.log(horsePosRed[0] - 1);
           console.log(horsePosRed[1] - 2);
+          console.log(currentNode.getStateW());
           var son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -341,7 +353,7 @@ export class DepthAlgorithm {
 
           var eight = son.eightMovement(horsePosRed);
           son.sethorsePosRed(eight);
-          son.move(horsePosRed);
+          son.moveRed(horsePosRed);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -381,7 +393,7 @@ export class DepthAlgorithm {
 
           var one = son.oneMovement(horsePosGreen);
           son.sethorsePosGreen(one);
-          son.move(horsePosGreen);
+          son.moveGreen(horsePosGreen);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -422,7 +434,7 @@ export class DepthAlgorithm {
 
           var two = son.twoMovement(horsePosGreen);
           son.sethorsePosGreen(two);
-          son.move(horsePosGreen);
+          son.moveGreen(horsePosGreen);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -460,7 +472,7 @@ export class DepthAlgorithm {
 
           var three = son.threeMovement(horsePosGreen);
           son.sethorsePosGreen(three);
-          son.move(horsePosGreen);
+          son.moveGreen(horsePosGreen);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -498,7 +510,7 @@ export class DepthAlgorithm {
 
           var four = son.fourMovement(horsePosGreen);
           son.sethorsePosGreen(four);
-          son.move(horsePosGreen);
+          son.moveGreen(horsePosGreen);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -535,7 +547,7 @@ export class DepthAlgorithm {
 
           var five = son.fiveMovement(horsePosGreen);
           son.sethorsePosGreen(five);
-          son.move(horsePosGreen);
+          son.moveGreen(horsePosGreen);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -572,7 +584,7 @@ export class DepthAlgorithm {
 
           var six = son.sixMovement(horsePosGreen);
           son.sethorsePosGreen(six);
-          son.move(horsePosGreen);
+          son.moveGreen(horsePosGreen);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -609,7 +621,7 @@ export class DepthAlgorithm {
 
           var seven = son.sevenMovement(horsePosGreen);
           son.sethorsePosGreen(seven);
-          son.move(horsePosGreen);
+          son.moveGreen(horsePosGreen);
 
           stack.unshift(son);
           arrayComplete.push(son);
@@ -647,7 +659,7 @@ export class DepthAlgorithm {
 
           var eight = son.eightMovement(horsePosGreen);
           son.sethorsePosGreen(eight);
-          son.move(horsePosGreen);
+          son.moveGreen(horsePosGreen);
 
           stack.unshift(son);
           arrayComplete.push(son);
