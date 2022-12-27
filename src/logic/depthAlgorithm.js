@@ -194,9 +194,6 @@ export class DepthAlgorithm {
             );
           }
 
-          console.log(currentNode.getStateW());
-          console.log(son.getStateW());
-
           stack.unshift(son);
           arrayComplete.push(son);
         }

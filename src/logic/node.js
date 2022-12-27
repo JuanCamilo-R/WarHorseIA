@@ -24,8 +24,7 @@ export class Node {
   }
 
   getStateW() {
-    let copy = Array.from(this.stateW);
-    return copy;
+    return JSON.parse(JSON.stringify(this.stateW));
   }
 
   getFather() {
