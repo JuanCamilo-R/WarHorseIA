@@ -8,19 +8,15 @@ export const Square = ({ type, status, onClick }) => {
 
     // Changes the color of the square according to its status.
     const squareColor = (status) => {
-        switch (status) {
-            case 'free':
-                return '#E8EEF5';
-            case 'green':
-                return '#51C529';
-            case 'red':
-                return '#FF4547';
-            case 'free-dark':
-                return '#8AA7C9';
-            default:
-                return '#E8EEF5';
-        }
-    };
+        const color = {
+            'free': '#E8EEF5',
+            'green': '#51C529',
+            'red': '#FF4547',
+            'free-dark': '#8AA7C9',
+            'default': '#E8EEF5',
+        };
+        return (color[status] ?? color['default']);
+    }
 
     // Adds or removes an image to the square according to its type.
     const showIcon = (type) => {
@@ -36,32 +32,25 @@ export const Square = ({ type, status, onClick }) => {
             default:
                 return <></>;
         }
-    };
+    }
 
     // Decides the name of the style according to the type of square.
     const className = (type, status) => {
-        if (type === 'horse-selected') {
-            return 'horseSquareSelected';
-        }
-
-        if (status === 'free-dark') {
-            return 'freeDarkSquare';
-        }
-
-        return 'square';
-    };
+        const name = {
+            'horse-selected': 'horseSquareSelected',
+            'free-dark': 'freeDarkSquare',
+            'default': 'square',
+        };
+        return (name[type] ?? name[status] ?? name['default']);
+    }
 
     return (
         <div
             className={className(type, status)}
             onClick={onClick}
-            style={{
-                background: squareColor(status),
-
-                cursor: cursor,
-            }}
+            style={{ background: squareColor(status), cursor: cursor, }}
         >
             {showIcon(type)}
         </div>
     );
-};
+}

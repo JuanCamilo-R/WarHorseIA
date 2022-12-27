@@ -43,6 +43,15 @@
   flex-wrap: wrap;
 }
 
+.score {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  gap: max(0.74vw, 10px);
+  flex-wrap: wrap;
+}
+
 .statusCaption {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-style: normal;
