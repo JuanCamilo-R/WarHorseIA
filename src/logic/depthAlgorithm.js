@@ -84,7 +84,7 @@ export class DepthAlgorithm {
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
-            son.paintBounsRed();
+            son.paintBonusRed();
             son.setBonus(true);
           }
           if (nivelGame % 2 == 0) {
@@ -103,8 +103,7 @@ export class DepthAlgorithm {
           son.searchForHorseGreen();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -156,7 +155,7 @@ export class DepthAlgorithm {
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
-            son.paintBounsRed();
+            son.paintBonusRed();
             son.setBonus(true);
           }
           if (nivelGame % 2 == 0) {
@@ -175,8 +174,7 @@ export class DepthAlgorithm {
           son.searchForHorseGreen();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -227,7 +225,7 @@ export class DepthAlgorithm {
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
-            son.paintBounsRed();
+            son.paintBonusRed();
             son.setBonus(true);
           }
 
@@ -247,8 +245,7 @@ export class DepthAlgorithm {
           son.searchForHorseGreen();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -298,7 +295,7 @@ export class DepthAlgorithm {
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
-            son.paintBounsRed();
+            son.paintBonusRed();
             son.setBonus(true);
           }
 
@@ -318,8 +315,7 @@ export class DepthAlgorithm {
           son.searchForHorseGreen();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -368,7 +364,7 @@ export class DepthAlgorithm {
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
-            son.paintBounsRed();
+            son.paintBonusRed();
             son.setBonus(true);
           }
 
@@ -388,8 +384,7 @@ export class DepthAlgorithm {
           son.searchForHorseGreen();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -439,7 +434,7 @@ export class DepthAlgorithm {
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
-            son.paintBounsRed();
+            son.paintBonusRed();
             son.setBonus(true);
           }
 
@@ -459,8 +454,7 @@ export class DepthAlgorithm {
           son.searchForHorseGreen();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -509,7 +503,7 @@ export class DepthAlgorithm {
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
-            son.paintBounsRed();
+            son.paintBonusRed();
             son.setBonus(true);
           }
 
@@ -529,8 +523,7 @@ export class DepthAlgorithm {
           son.searchForHorseGreen();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -580,7 +573,7 @@ export class DepthAlgorithm {
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
             //poner bonos en True
-            son.paintBounsRed();
+            son.paintBonusRed();
             son.setBonus(true);
           }
 
@@ -600,8 +593,7 @@ export class DepthAlgorithm {
           son.searchForHorseGreen();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -652,7 +644,7 @@ export class DepthAlgorithm {
             ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
-            son.paintBounsGreen();
+            son.paintBonusGreen();
           }
 
           if (nivelGame % 2 == 0) {
@@ -674,8 +666,7 @@ export class DepthAlgorithm {
           son.searchForHorseRed();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -724,7 +715,7 @@ export class DepthAlgorithm {
             ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
-            son.paintBounsGreen();
+            son.paintBonusGreen();
           }
 
           if (nivelGame % 2 == 0) {
@@ -743,8 +734,7 @@ export class DepthAlgorithm {
           son.searchForHorseRed();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -793,7 +783,7 @@ export class DepthAlgorithm {
             ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
-            son.paintBounsGreen();
+            son.paintBonusGreen();
           }
 
           if (nivelGame % 2 == 0) {
@@ -812,8 +802,7 @@ export class DepthAlgorithm {
           son.searchForHorseRed();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -862,7 +851,7 @@ export class DepthAlgorithm {
             ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
-            son.paintBounsGreen();
+            son.paintBonusGreen();
           }
 
           if (nivelGame % 2 == 0) {
@@ -881,8 +870,7 @@ export class DepthAlgorithm {
           son.searchForHorseRed();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -930,7 +918,7 @@ export class DepthAlgorithm {
             ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
-            son.paintBounsGreen();
+            son.paintBonusGreen();
           }
 
           if (nivelGame % 2 == 0) {
@@ -949,8 +937,7 @@ export class DepthAlgorithm {
           son.searchForHorseRed();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -998,7 +985,7 @@ export class DepthAlgorithm {
             [horsePosGreen[1] - 1] == 3)
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
-            son.paintBounsGreen();
+            son.paintBonusGreen();
           }
 
           if (nivelGame % 2 == 0) {
@@ -1017,8 +1004,7 @@ export class DepthAlgorithm {
           son.searchForHorseRed();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -1066,7 +1052,7 @@ export class DepthAlgorithm {
             ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
-            son.paintBounsGreen();
+            son.paintBonusGreen();
           }
 
           if (nivelGame % 2 == 0) {
@@ -1085,8 +1071,7 @@ export class DepthAlgorithm {
           son.searchForHorseRed();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
@@ -1135,7 +1120,7 @@ export class DepthAlgorithm {
             ] == 3
           ) {
             //llamar funcion para ver cuantos puedo pintar porque cogi bono
-            son.paintBounsGreen();
+            son.paintBonusGreen();
           }
 
           if (nivelGame % 2 == 0) {
@@ -1154,8 +1139,7 @@ export class DepthAlgorithm {
           son.searchForHorseRed();
           if (
             son.getDepth() == this.nivel ||
-            (son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0)
+            son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
           ) {
             let moveComputer = 0;
             let moveHuman = 0;
