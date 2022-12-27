@@ -589,6 +589,20 @@ export class Node {
     return countGreen;
   }
 
+  getHeuristicBonus() {
+    let currentNode = this;
+    let weight = 2;
+    let accum = 0;
+    while (currentNode != null) {
+      if (currentNode.getBonus()) {
+        accum += currentNode.getDepth() * weight;
+        weight += 2;
+      }
+      currentNode = currentNode.getFather();
+    }
+    return accum;
+  }
+
   countColorsRedFunc() {
     //contar cuantas casillas rojas hay despues del movimiento
     let countRed = 0;

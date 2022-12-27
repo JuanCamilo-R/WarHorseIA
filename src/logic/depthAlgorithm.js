@@ -115,7 +115,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -186,7 +187,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -257,7 +259,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -327,7 +330,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -396,7 +400,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -466,7 +471,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -535,7 +541,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -605,7 +612,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -678,7 +686,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -746,7 +755,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -814,7 +824,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -882,7 +893,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -949,7 +961,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -1016,7 +1029,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -1083,7 +1097,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
@@ -1151,7 +1166,8 @@ export class DepthAlgorithm {
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
-            bonus = 0;
+            bonus = son.getHeuristicBonus();
+            console.log("Bonus heuristic: ", bonus);
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
