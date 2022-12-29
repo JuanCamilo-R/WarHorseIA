@@ -9,7 +9,7 @@ const GRIDWIDTH = 8;
 let newWorlds = new World();
 newWorlds.fillWorld();
 const newWorld = newWorlds.world;
-newWorlds.printWorld();
+//newWorlds.printWorld();
 
 class Board extends React.Component {
     constructor(props) {
@@ -17,7 +17,6 @@ class Board extends React.Component {
         this.state = {
             squares: this.setInitialPositions(),
             redIsNext: true,
-            gameOver: false,
             redHorseId: `${newWorlds.redHorse[0]},${newWorlds.redHorse[1]}`,
             greenHorseId: `${newWorlds.greenHorse[0]},${newWorlds.greenHorse[1]}`,
             redScore: 1,
@@ -25,33 +24,24 @@ class Board extends React.Component {
         };
     }
 
+    gameOver = false;
     // Sets the starting positions of the squares.
     setInitialPositions = () => {
         const squares = Array(GRIDHEIGHT * GRIDWIDTH).fill(['', 'free']);
 
+        const position = {
+            0: ['', 'free'],
+            1: ['horse', 'red'],
+            2: ['horse', 'green'],
+            3: ['bonus', 'free'],
+            4: ['', 'red'],
+            5: ['', 'green'],
+            'default': ['', 'free'],
+        };
+
         for (let i = 0; i < GRIDHEIGHT; i++) {
             for (let j = 0; j < GRIDWIDTH; j++) {
-
-                if (newWorld[i][j] === 1) {
-                    squares[i * GRIDWIDTH + j] = ['horse', 'red'];
-                }
-
-                if (newWorld[i][j] === 2) {
-                    squares[i * GRIDWIDTH + j] = ['horse', 'green'];
-                }
-
-                if (newWorld[i][j] === 3) {
-                    squares[i * GRIDWIDTH + j] = ['bonus', 'free'];
-                }
-
-                if (newWorld[i][j] === 4) {
-                    squares[i * GRIDWIDTH + j] = ['', 'red'];
-                }
-
-                if (newWorld[i][j] === 5) {
-                    squares[i * GRIDWIDTH + j] = ['', 'green'];
-                }
-
+                squares[i * GRIDWIDTH + j] = position[newWorld[i][j]] ?? position['default'];
             }
         }
 
@@ -82,7 +72,7 @@ class Board extends React.Component {
         //const squares = this.state.squares.slice();
         const squares = JSON.parse(JSON.stringify(this.state.squares));
 
-        if (this.calculateWinner(squares) === 'no winner yet' && squares[i][1] !== 'free') {
+        if (!this.gameOver && squares[i][1] !== 'free') {
 
             const turn = this.state.redIsNext ? 'red' : 'green'
             const horseId = turn === 'red' ? this.state.redHorseId : this.state.greenHorseId;
@@ -210,8 +200,7 @@ class Board extends React.Component {
             const column = moves[i][1];
             const index = row * GRIDWIDTH + column;
 
-            if (row >= 0 && row < GRIDHEIGHT &&
-                column >= 0 && column < GRIDWIDTH) {
+            if (row >= 0 && row < GRIDHEIGHT && column >= 0 && column < GRIDWIDTH) {
                 if (squares[index][1] === status) {
                     possibleMoves.push(index);
                 }
@@ -238,8 +227,7 @@ class Board extends React.Component {
             const column = adjacent[i][1];
             const index = row * GRIDWIDTH + column;
 
-            if (row >= 0 && row < GRIDHEIGHT &&
-                column >= 0 && column < GRIDWIDTH) {
+            if (row >= 0 && row < GRIDHEIGHT && column >= 0 && column < GRIDWIDTH) {
                 if (squares[index][1] === 'free') {
                     possibleSquares.push(index);
                 }
@@ -248,7 +236,6 @@ class Board extends React.Component {
 
         return possibleSquares;
     }
-
 
     renderSquare = (squareId, onClick, pos) => {
         return (
@@ -264,30 +251,41 @@ class Board extends React.Component {
     // Scans the board to determine if there are no more possible moves and returns a winner.
     calculateWinner = (squares) => {
         let winner = 'no winner yet';
+
+        const redMoves = this.knightMoves(this.state.redHorseId, squares, 'free');
+        if (redMoves.length > 0) {
+            return winner;
+        }
+        const redMoves2 = this.knightMoves(this.state.redHorseId, squares, 'free-dark');
+        if (redMoves2.length > 0) {
+            return winner;
+        }
+        const greenMoves = this.knightMoves(this.state.greenHorseId, squares, 'free');
+        if (greenMoves.length > 0) {
+            return winner;
+        }
+        const greenMoves2 = this.knightMoves(this.state.greenHorseId, squares, 'free-dark');
+        if (greenMoves2.length > 0) {
+            return winner;
+        }
+
         const redScore = this.state.redScore;
         const greenScore = this.state.greenScore;
 
-        const redMoves = this.knightMoves(this.state.redHorseId, squares, 'free');
-        const redMoves2 = this.knightMoves(this.state.redHorseId, squares, 'free-dark');
-        const greenMoves = this.knightMoves(this.state.greenHorseId, squares, 'free');
-        const greenMoves2 = this.knightMoves(this.state.greenHorseId, squares, 'free-dark');
+        this.gameOver = true;
 
-        if (greenMoves.length === 0 && redMoves.length === 0 &&
-            redMoves2.length === 0 && greenMoves2.length === 0) {
-
-            winner =
-                redScore === greenScore
-                    ? 'Game ends in a draw'
-                    : redScore > greenScore
-                        ? 'Red player wins'
-                        : 'Green player wins';
-        }
+        winner =
+            redScore === greenScore
+                ? 'Game ends in a draw'
+                : redScore > greenScore
+                    ? 'Red player wins'
+                    : 'Green player wins';
 
         return winner;
     }
 
     render = () => {
-        
+
         const winner = this.calculateWinner(this.state.squares);
 
         // Shows who plays next.
@@ -296,14 +294,15 @@ class Board extends React.Component {
                 ? (this.state.redIsNext ? `Red's ` : `Green's `) + 'turn '
                 : winner;
 
-        const squaresList = [];
-        // Creates all the squares.
+        const squaresRows = [];
+        // Creates and organizes all the squares.
         for (let i = 0; i < GRIDHEIGHT; i++) {
+            let row = [];
             for (let j = 0; j < GRIDWIDTH; j++) {
                 const squareId = `${i},${j}`;
                 const pos = this.idToPos(squareId)
 
-                squaresList.push(
+                row.push(
                     this.renderSquare(
                         squareId,
                         () => {
@@ -313,20 +312,7 @@ class Board extends React.Component {
                     )
                 );
             }
-        }
-
-        const squaresRows = [];
-        //Organizes all the squares.
-        for (let i = 0; i < GRIDHEIGHT; i++) {
-            let row = [];
-            for (let j = 0; j < GRIDWIDTH; j++) {
-                row.push(squaresList[i * GRIDWIDTH + j]);
-            }
-            squaresRows.push(
-                <div key={i} className="boardRow">
-                    {row}
-                </div>
-            );
+            squaresRows.push(<div key={i} className="boardRow">{row}</div>);
         }
 
         return (
