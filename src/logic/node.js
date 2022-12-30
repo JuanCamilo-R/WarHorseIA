@@ -21,10 +21,15 @@ export class Node {
     this.bonus = false;
     this.type = " "; //max or min
     this.weight; //valor inicial: infinity o -inifinity, si el ultimo le pongo el valor de la heuristica
+    this.created = true; //puede crear un hijo
   }
 
   getStateW() {
     return JSON.parse(JSON.stringify(this.stateW));
+  }
+
+  getCreate() {
+    return this.created;
   }
 
   getFather() {
@@ -99,6 +104,10 @@ export class Node {
     this.father = newFather;
   }
 
+  setCreate(newCreated) {
+    this.created = newCreated;
+  }
+
   setWeight(newWeight) {
     this.weight = newWeight;
   }
@@ -132,9 +141,7 @@ export class Node {
   }
 
   sethorsePosRed(newhorsePosRed) {
-    console.log(newhorsePosRed);
     this.horsePosRed = newhorsePosRed;
-    console.log(this.horsePosRed);
   }
 
   sethorsePosGreen(newhorsePosGreen) {
@@ -165,7 +172,7 @@ export class Node {
         }
 
     this.sethorsePosRed(horsePosRed);
-    console.log(horsePosRed);
+
     return horsePosRed;
   }
 
@@ -180,7 +187,7 @@ export class Node {
         }
 
     this.sethorsePosGreen(horsePosGreen);
-    console.log(horsePosGreen);
+
     return horsePosGreen;
   }
 
@@ -233,11 +240,7 @@ export class Node {
     let jNew = this.getHorsePosRed()[1];
     this.stateW[iOld][jOld] = 4; //casilla roja
     this.stateW[iNew][jNew] = 1; //caballo rojo
-    console.log(iOld);
-    console.log(jOld);
-    console.log(iNew);
-    console.log(jNew);
-    console.log(this.stateW);
+
     return this;
   }
 
@@ -248,26 +251,15 @@ export class Node {
     let jNew = this.getHorsePosGreen()[1];
     this.stateW[iOld][jOld] = 5; //casilla verde
     this.stateW[iNew][jNew] = 2; //caballo verde
-    console.log(iOld);
-    console.log(jOld);
-    console.log(iNew);
-    console.log(jNew);
-    console.log(this.stateW);
+
     return this;
   }
 
   paintBonusRed() {
     //si coge bono cambia de color los adyacentes
+
     if (
-      this.getStateW()[this.getHorsePosRed()[0] - 1][
-        this.getHorsePosRed()[1] - 1
-      ] == 0
-    ) {
-      this.stateW[this.getHorsePosRed()[0] - 1][
-        this.getHorsePosRed()[1] - 1
-      ] = 4;
-    }
-    if (
+      !(this.getHorsePosRed()[0] - 1 < 0) &&
       this.getStateW()[this.getHorsePosRed()[0] - 1][
         this.getHorsePosRed()[1]
       ] == 0
@@ -275,32 +267,16 @@ export class Node {
       this.stateW[this.getHorsePosRed()[0] - 1][this.getHorsePosRed()[1]] = 4;
     }
     if (
-      this.getStateW()[this.getHorsePosRed()[0] - 1][
-        this.getHorsePosRed()[1] + 1
-      ] == 0
-    ) {
-      this.stateW[this.getHorsePosRed()[0] - 1][
-        this.getHorsePosRed()[1] + 1
-      ] = 4;
-    }
-    if (
+      !(this.getHorsePosRed()[1] + 1 > 7) &&
       this.getStateW()[this.getHorsePosRed()[0]][
         this.getHorsePosRed()[1] + 1
       ] == 0
     ) {
       this.stateW[this.getHorsePosRed()[0]][this.getHorsePosRed()[1] + 1] = 4;
     }
-    if (
-      this.getStateW()[this.getHorsePosRed()[0] + 1][
-        this.getHorsePosRed()[1] + 1
-      ] == 0
-    ) {
-      this.stateW[this.getHorsePosRed()[0] + 1][
-        this.getHorsePosRed()[1] + 1
-      ] = 4;
-    }
 
     if (
+      !(this.getHorsePosRed()[0] + 1 > 7) &&
       this.getStateW()[this.getHorsePosRed()[0] + 1][
         this.getHorsePosRed()[1]
       ] == 0
@@ -309,16 +285,7 @@ export class Node {
     }
 
     if (
-      this.getStateW()[this.getHorsePosRed()[0] + 1][
-        this.getHorsePosRed()[1] - 1
-      ] == 0
-    ) {
-      this.stateW[this.getHorsePosRed()[0] + 1][
-        this.getHorsePosRed()[1] - 1
-      ] = 4;
-    }
-
-    if (
+      !(this.getHorsePosRed()[1] - 1 < 0) &&
       this.getStateW()[this.getHorsePosRed()[0]][
         this.getHorsePosRed()[1] - 1
       ] == 0
@@ -329,80 +296,49 @@ export class Node {
 
   paintBonusGreen() {
     //si coge bono cambia de color los adyacentes
+
     if (
-      this.getStateW()[this.getHorsePosGreen()[0] - 1][
-        this.getHorsePosGreen()[1] - 1
-      ] == 0
-    ) {
-      this.stateW[this.getHorsePosGreen()[0] - 1][
-        this.getHorsePosGreen()[1] - 1
-      ] = 4;
-    }
-    if (
+      !(this.getHorsePosGreen()[0] - 1 < 0) &&
       this.getStateW()[this.getHorsePosGreen()[0] - 1][
         this.getHorsePosGreen()[1]
       ] == 0
     ) {
       this.stateW[this.getHorsePosGreen()[0] - 1][
         this.getHorsePosGreen()[1]
-      ] = 4;
+      ] = 5;
     }
+
     if (
-      this.getStateW()[this.getHorsePosGreen()[0] - 1][
-        this.getHorsePosGreen()[1] + 1
-      ] == 0
-    ) {
-      this.stateW[this.getHorsePosGreen()[0] - 1][
-        this.getHorsePosGreen()[1] + 1
-      ] = 4;
-    }
-    if (
+      !(this.getHorsePosGreen()[1] + 1 > 7) &&
       this.getStateW()[this.getHorsePosGreen()[0]][
         this.getHorsePosGreen()[1] + 1
       ] == 0
     ) {
       this.stateW[this.getHorsePosGreen()[0]][
         this.getHorsePosGreen()[1] + 1
-      ] = 4;
-    }
-    if (
-      this.getStateW()[this.getHorsePosGreen()[0] + 1][
-        this.getHorsePosGreen()[1] + 1
-      ] == 0
-    ) {
-      this.stateW[this.getHorsePosGreen()[0] + 1][
-        this.getHorsePosGreen()[1] + 1
-      ] = 4;
+      ] = 5;
     }
 
     if (
+      !(this.getHorsePosGreen()[0] + 1 > 7) &&
       this.getStateW()[this.getHorsePosGreen()[0] + 1][
         this.getHorsePosGreen()[1]
       ] == 0
     ) {
       this.stateW[this.getHorsePosGreen()[0] + 1][
         this.getHorsePosGreen()[1]
-      ] = 4;
+      ] = 5;
     }
 
     if (
-      this.getStateW()[this.getHorsePosGreen()[0] + 1][
-        this.getHorsePosGreen()[1] - 1
-      ] == 0
-    ) {
-      this.stateW[this.getHorsePosGreen()[0] + 1][
-        this.getHorsePosGreen()[1] - 1
-      ] = 4;
-    }
-
-    if (
+      !(this.getHorsePosGreen()[1] - 1 < 0) &&
       this.getStateW()[this.getHorsePosGreen()[0]][
         this.getHorsePosGreen()[1] - 1
       ] == 0
     ) {
       this.stateW[this.getHorsePosGreen()[0]][
         this.getHorsePosGreen()[1] - 1
-      ] = 4;
+      ] = 5;
     }
   }
 
@@ -586,7 +522,7 @@ export class Node {
         }
 
     this.setCountColorsGreen(countGreen);
-    return countGreen;
+    return countGreen + 1;
   }
 
   getHeuristicBonus() {
@@ -614,6 +550,6 @@ export class Node {
         }
 
     this.setCountColorsRed(countRed);
-    return countRed;
+    return countRed + 1;
   }
 }

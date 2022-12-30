@@ -10,8 +10,6 @@ export class DepthAlgorithm {
     this.firstNode.setWeight(-1000);
     this.computingTime = "";
     this.nivel = nivel;
-    console.log("constructor");
-    console.log(world);
   }
 
   recorrido(arr) {
@@ -35,7 +33,7 @@ export class DepthAlgorithm {
     let arrayComplete = [];
     arrayComplete.push(currentNode);
 
-    while (!(nivelGame == this.nivel)) {
+    while (stack.length != 0) {
       // //console.log("---");
       if (nivelGame % 2 == 0) {
         ////console.log(currentNode.getHorsePosRed());
@@ -50,24 +48,17 @@ export class DepthAlgorithm {
       //tablero de 8*8, el anterior era e 10*10
 
       if (nivelGame % 2 == 0) {
-        console.log("aqui si");
-        //le toca al computador
-
-        console.log(horsePosRed[0]);
-        console.log(horsePosRed[1]);
         //One
-
+        console.log("aqui si");
         if (
           !(horsePosRed[0] - 2 < 0) &&
           !(horsePosRed[1] - 1 < 0) &&
           (currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] - 1] ==
             0 ||
             currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] - 1] ==
-              3)
+              3) &&
+          currentNode.getCreate()
         ) {
-          console.log("siOne");
-          console.log(horsePosRed[0] - 2);
-          console.log(horsePosRed[1] - 1);
           let son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -110,6 +101,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveHuman = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -117,12 +109,22 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
+              son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
+            ) {
+              optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus +
+                optionMoveHuman
             );
+            son.setCreate(false); //ya no se crean mas nodos, este es el ultimo
           }
-          console.log(currentNode.getStateW());
-          console.log(son.getStateW());
+
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -134,12 +136,9 @@ export class DepthAlgorithm {
           (currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] + 1] ==
             0 ||
             currentNode.getStateW()[horsePosRed[0] - 2][horsePosRed[1] + 1] ==
-              3)
+              3) &&
+          currentNode.getCreate()
         ) {
-          console.log("siTwo");
-          console.log(horsePosRed[0] - 2);
-          console.log(horsePosRed[1] + 1);
-          console.log(currentNode.getStateW());
           let son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -182,6 +181,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveHuman = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -189,9 +189,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
+              son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
+            ) {
+              optionMoveHuman = 12;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus +
+                optionMoveHuman
             );
+            son.setCreate(false);
           }
 
           stack.unshift(son);
@@ -205,12 +216,9 @@ export class DepthAlgorithm {
           (currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] + 2] ==
             0 ||
             currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] + 2] ==
-              3)
+              3) &&
+          currentNode.getCreate()
         ) {
-          console.log("siThree");
-          console.log(horsePosRed[0] - 1);
-          console.log(horsePosRed[1] + 2);
-          console.log(currentNode.getStateW());
           let son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -254,6 +262,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveHuman = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -261,9 +270,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
+              son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
+            ) {
+              optionMoveHuman = 12;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus +
+                optionMoveHuman
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -276,12 +296,9 @@ export class DepthAlgorithm {
           (currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] + 2] ==
             0 ||
             currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] + 2] ==
-              3)
+              3) &&
+          currentNode.getCreate()
         ) {
-          console.log("siFour");
-          console.log(horsePosRed[0] + 1);
-          console.log(horsePosRed[1] + 2);
-          console.log(currentNode.getStateW());
           let son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -325,6 +342,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveHuman = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -332,9 +350,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
+              son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
+            ) {
+              optionMoveHuman = 12;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus +
+                optionMoveHuman
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -346,12 +375,9 @@ export class DepthAlgorithm {
           (currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] + 1] ==
             0 ||
             currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] + 1] ==
-              3)
+              3) &&
+          currentNode.getCreate()
         ) {
-          console.log("siFive");
-          console.log(horsePosRed[0] + 2);
-          console.log(horsePosRed[1] + 1);
-          console.log(currentNode.getStateW());
           let son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -395,6 +421,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveHuman = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -402,9 +429,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
+              son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
+            ) {
+              optionMoveHuman = 12;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus +
+                optionMoveHuman
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -417,12 +455,9 @@ export class DepthAlgorithm {
           (currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] - 1] ==
             0 ||
             currentNode.getStateW()[horsePosRed[0] + 2][horsePosRed[1] - 1] ==
-              3)
+              3) &&
+          currentNode.getCreate()
         ) {
-          console.log("siSix");
-          console.log(horsePosRed[0] + 2);
-          console.log(horsePosRed[1] - 1);
-          console.log(currentNode.getStateW());
           let son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -466,6 +501,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveHuman = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -473,9 +509,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
+              son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
+            ) {
+              optionMoveHuman = 12;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus +
+                optionMoveHuman
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -487,12 +534,9 @@ export class DepthAlgorithm {
           (currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] - 2] ==
             0 ||
             currentNode.getStateW()[horsePosRed[0] + 1][horsePosRed[1] - 2] ==
-              3)
+              3) &&
+          currentNode.getCreate()
         ) {
-          console.log("siSeven");
-          console.log(horsePosRed[0] + 1);
-          console.log(horsePosRed[1] - 2);
-          console.log(currentNode.getStateW());
           let son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -536,6 +580,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveHuman = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -543,9 +588,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
+            ) {
+              optionMoveHuman = 12;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus +
+                optionMoveHuman
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -558,12 +614,9 @@ export class DepthAlgorithm {
           (currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] - 2] ==
             0 ||
             currentNode.getStateW()[horsePosRed[0] - 1][horsePosRed[1] - 2] ==
-              3)
+              3) &&
+          currentNode.getCreate()
         ) {
-          console.log("siEight");
-          console.log(horsePosRed[0] - 1);
-          console.log(horsePosRed[1] - 2);
-          console.log(currentNode.getStateW());
           let son = new Node(
             currentNode.getStateW(),
             currentNode,
@@ -607,6 +660,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveHuman = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -614,9 +668,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
+            ) {
+              optionMoveHuman = 12;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus +
+                optionMoveHuman
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -633,7 +698,8 @@ export class DepthAlgorithm {
           ] == 0 ||
             currentNode.getStateW()[horsePosGreen[0] - 2][
               horsePosGreen[1] - 1
-            ] == 3)
+            ] == 3) &&
+          currentNode.getCreate()
         ) {
           let son = new Node(
             currentNode.getStateW(),
@@ -681,6 +747,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveComputer = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -688,9 +755,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
+            ) {
+              optionMoveComputer = 6;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus -
+                optionMoveComputer
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -705,7 +783,8 @@ export class DepthAlgorithm {
           ] == 0 ||
             currentNode.getStateW()[horsePosGreen[0] - 2][
               horsePosGreen[1] + 1
-            ] == 3)
+            ] == 3) &&
+          currentNode.getCreate()
         ) {
           let son = new Node(
             currentNode.getStateW(),
@@ -750,6 +829,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveComputer = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -757,9 +837,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
+            ) {
+              optionMoveComputer = 6;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus -
+                optionMoveComputer
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -774,7 +865,8 @@ export class DepthAlgorithm {
           ] == 0 ||
             currentNode.getStateW()[horsePosGreen[0] - 1][
               horsePosGreen[1] + 2
-            ] == 3)
+            ] == 3) &&
+          currentNode.getCreate()
         ) {
           let son = new Node(
             currentNode.getStateW(),
@@ -819,6 +911,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveComputer = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -826,9 +919,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
+            ) {
+              optionMoveComputer = 6;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus -
+                optionMoveComputer
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -843,7 +947,8 @@ export class DepthAlgorithm {
           ] == 0 ||
             currentNode.getStateW()[horsePosGreen[0] + 1][
               horsePosGreen[1] + 2
-            ] == 3)
+            ] == 3) &&
+          currentNode.getCreate()
         ) {
           let son = new Node(
             currentNode.getStateW(),
@@ -888,6 +993,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveComputer = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -895,9 +1001,16 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
+            ) {
+              optionMoveComputer = 6;
+            }
             son.setWeight(
               moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -911,7 +1024,8 @@ export class DepthAlgorithm {
           ] == 0 ||
             currentNode.getStateW()[horsePosGreen[0] + 2][
               horsePosGreen[1] + 1
-            ] == 3)
+            ] == 3) &&
+          currentNode.getCreate()
         ) {
           let son = new Node(
             currentNode.getStateW(),
@@ -956,6 +1070,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveComputer = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -963,9 +1078,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
+            ) {
+              optionMoveComputer = 6;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus -
+                optionMoveComputer
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -980,7 +1106,8 @@ export class DepthAlgorithm {
           ] == 0 ||
             currentNode.getStateW()[horsePosGreen[0] + 2][
               horsePosGreen[1] - 1
-            ] == 3)
+            ] == 3) &&
+          currentNode.getCreate()
         ) {
           let son = new Node(
             currentNode.getStateW(),
@@ -1024,6 +1151,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveComputer = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -1031,9 +1159,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
+            ) {
+              optionMoveComputer = 6;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus -
+                optionMoveComputer
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -1047,7 +1186,8 @@ export class DepthAlgorithm {
           ] == 0 ||
             currentNode.getStateW()[horsePosGreen[0] + 1][
               horsePosGreen[1] - 2
-            ] == 3)
+            ] == 3) &&
+          currentNode.getCreate()
         ) {
           let son = new Node(
             currentNode.getStateW(),
@@ -1092,6 +1232,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveComputer = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -1099,9 +1240,20 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
+            ) {
+              optionMoveComputer = 6;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus -
+                optionMoveComputer
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
@@ -1116,7 +1268,8 @@ export class DepthAlgorithm {
           ] == 0 ||
             currentNode.getStateW()[horsePosGreen[0] - 1][
               horsePosGreen[1] - 2
-            ] == 3)
+            ] == 3) &&
+          currentNode.getCreate()
         ) {
           let son = new Node(
             currentNode.getStateW(),
@@ -1161,6 +1314,7 @@ export class DepthAlgorithm {
             let colorHuman = 0;
             let colorComputer = 0;
             let bonus = 0;
+            let optionMoveComputer = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -1168,14 +1322,26 @@ export class DepthAlgorithm {
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
             console.log("Bonus heuristic: ", bonus);
+            if (
+              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
+              son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
+            ) {
+              optionMoveComputer = 6;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus -
+                optionMoveComputer
             );
+            son.setCreate(false);
           }
           stack.unshift(son);
           arrayComplete.push(son);
         }
       }
+      currentNode = stack[0];
       nivelGame++;
     }
     //solution = currentNode.recreateSolutionWorld();
