@@ -259,6 +259,7 @@ export class Node {
     //si coge bono cambia de color los adyacentes
 
     if (
+      !(this.getHorsePosRed()[0] - 1 < 0) &&
       this.getStateW()[this.getHorsePosRed()[0] - 1][
         this.getHorsePosRed()[1]
       ] == 0
@@ -266,6 +267,7 @@ export class Node {
       this.stateW[this.getHorsePosRed()[0] - 1][this.getHorsePosRed()[1]] = 4;
     }
     if (
+      !(this.getHorsePosRed()[1] + 1 > 7) &&
       this.getStateW()[this.getHorsePosRed()[0]][
         this.getHorsePosRed()[1] + 1
       ] == 0
@@ -274,6 +276,7 @@ export class Node {
     }
 
     if (
+      !(this.getHorsePosRed()[0] + 1 > 7) &&
       this.getStateW()[this.getHorsePosRed()[0] + 1][
         this.getHorsePosRed()[1]
       ] == 0
@@ -282,6 +285,7 @@ export class Node {
     }
 
     if (
+      !(this.getHorsePosRed()[1] - 1 < 0) &&
       this.getStateW()[this.getHorsePosRed()[0]][
         this.getHorsePosRed()[1] - 1
       ] == 0
@@ -294,6 +298,7 @@ export class Node {
     //si coge bono cambia de color los adyacentes
 
     if (
+      !(this.getHorsePosGreen()[0] - 1 < 0) &&
       this.getStateW()[this.getHorsePosGreen()[0] - 1][
         this.getHorsePosGreen()[1]
       ] == 0
@@ -304,6 +309,7 @@ export class Node {
     }
 
     if (
+      !(this.getHorsePosGreen()[1] + 1 > 7) &&
       this.getStateW()[this.getHorsePosGreen()[0]][
         this.getHorsePosGreen()[1] + 1
       ] == 0
@@ -314,6 +320,7 @@ export class Node {
     }
 
     if (
+      !(this.getHorsePosGreen()[0] + 1 > 7) &&
       this.getStateW()[this.getHorsePosGreen()[0] + 1][
         this.getHorsePosGreen()[1]
       ] == 0
@@ -324,6 +331,7 @@ export class Node {
     }
 
     if (
+      !(this.getHorsePosGreen()[1] - 1 < 0) &&
       this.getStateW()[this.getHorsePosGreen()[0]][
         this.getHorsePosGreen()[1] - 1
       ] == 0

@@ -33,7 +33,7 @@ export class DepthAlgorithm {
     let arrayComplete = [];
     arrayComplete.push(currentNode);
 
-    while (!(nivelGame == this.nivel)) {
+    while (stack.length != 0) {
       // //console.log("---");
       if (nivelGame % 2 == 0) {
         ////console.log(currentNode.getHorsePosRed());
