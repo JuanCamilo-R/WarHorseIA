@@ -16,7 +16,23 @@ export class DepthAlgorithm {
     let num = 0;
     let state = [];
     do {
-      state.push(arr[num].getStateW());
+      if (arr[num].getDepth() == 6) {
+        state.push(arr[num].getWeight());
+      }
+
+      num++;
+    } while (arr.length - 1 != num - 1);
+    return state;
+  }
+
+  recorrido2(arr) {
+    let num = 0;
+    let state = [];
+    do {
+      if (arr[num].getDepth() == 6) {
+        state.push(arr[num].getStateW());
+      }
+
       num++;
     } while (arr.length - 1 != num - 1);
     return state;
@@ -102,6 +118,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveHuman = 0;
+            let goal = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -115,13 +132,23 @@ export class DepthAlgorithm {
             ) {
               optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
             }
+            if (son.isGoal() && colorComputer > colorHuman) {
+              //gano computador
+              goal = 100;
+            }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus +
-                optionMoveHuman
+                optionMoveHuman +
+                goal
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
+
             son.setCreate(false); //ya no se crean mas nodos, este es el ultimo
           }
 
@@ -182,6 +209,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveHuman = 0;
+            let goal = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -193,15 +221,25 @@ export class DepthAlgorithm {
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
             ) {
-              optionMoveHuman = 12;
+              optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
+            }
+            if (son.isGoal() && colorComputer > colorHuman) {
+              //gano computador
+              goal = 100;
             }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus +
-                optionMoveHuman
+                optionMoveHuman +
+                goal
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
+
             son.setCreate(false);
           }
 
@@ -263,6 +301,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveHuman = 0;
+            let goal = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -274,15 +313,25 @@ export class DepthAlgorithm {
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
             ) {
-              optionMoveHuman = 12;
+              optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
+            }
+            if (son.isGoal() && colorComputer > colorHuman) {
+              //gano computador
+              goal = 100;
             }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus +
-                optionMoveHuman
+                optionMoveHuman +
+                goal
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
+
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -343,6 +392,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveHuman = 0;
+            let goal = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -354,14 +404,19 @@ export class DepthAlgorithm {
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
             ) {
-              optionMoveHuman = 12;
+              optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
+            }
+            if (son.isGoal() && colorComputer > colorHuman) {
+              //gano computador
+              goal = 100;
             }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus +
-                optionMoveHuman
+                optionMoveHuman +
+                goal
             );
             son.setCreate(false);
           }
@@ -422,6 +477,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveHuman = 0;
+            let goal = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -433,15 +489,24 @@ export class DepthAlgorithm {
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
             ) {
-              optionMoveHuman = 12;
+              optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
+            }
+            if (son.isGoal() && colorComputer > colorHuman) {
+              //gano computador
+              goal = 100;
             }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus +
-                optionMoveHuman
+                optionMoveHuman +
+                goal
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -502,6 +567,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveHuman = 0;
+            let goal = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -513,15 +579,24 @@ export class DepthAlgorithm {
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
             ) {
-              optionMoveHuman = 12;
+              optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
+            }
+            if (son.isGoal() && colorComputer > colorHuman) {
+              //gano computador
+              goal = 100;
             }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus +
-                optionMoveHuman
+                optionMoveHuman +
+                goal
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -581,6 +656,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveHuman = 0;
+            let goal = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -590,17 +666,26 @@ export class DepthAlgorithm {
             console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
+              son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
             ) {
-              optionMoveHuman = 12;
+              optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
+            }
+            if (son.isGoal() && colorComputer > colorHuman) {
+              //gano computador
+              goal = 100;
             }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus +
-                optionMoveHuman
+                optionMoveHuman +
+                goal
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -661,6 +746,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveHuman = 0;
+            let goal = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -670,17 +756,26 @@ export class DepthAlgorithm {
             console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
-              son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
+              son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
             ) {
-              optionMoveHuman = 12;
+              optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
+            }
+            if (son.isGoal() && colorComputer > colorHuman) {
+              //gano computador
+              goal = 100;
             }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus +
-                optionMoveHuman
+                optionMoveHuman +
+                goal
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -748,6 +843,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveComputer = 0;
+            let goalH = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -761,13 +857,22 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
+            if (son.isGoal() && colorHuman > colorComputer) {
+              //gano humano
+              goalH = 100;
+            }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus -
-                optionMoveComputer
+                optionMoveComputer -
+                goalH
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -830,6 +935,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveComputer = 0;
+            let goalH = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -843,13 +949,22 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
+            if (son.isGoal() && colorHuman > colorComputer) {
+              //gano humano
+              goalH = 100;
+            }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus -
-                optionMoveComputer
+                optionMoveComputer -
+                goalH
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -912,6 +1027,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveComputer = 0;
+            let goalH = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -925,13 +1041,22 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
+            if (son.isGoal() && colorHuman > colorComputer) {
+              //gano humano
+              goalH = 100;
+            }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus -
-                optionMoveComputer
+                optionMoveComputer -
+                goalH
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -994,6 +1119,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveComputer = 0;
+            let goalH = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -1007,9 +1133,22 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
+            if (son.isGoal() && colorHuman > colorComputer) {
+              //gano humano
+              goalH = 100;
+            }
             son.setWeight(
-              moveComputer - moveHuman + (colorComputer - colorHuman) + bonus
+              moveComputer -
+                moveHuman +
+                (colorComputer - colorHuman) +
+                bonus -
+                optionMoveComputer -
+                goalH
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -1071,6 +1210,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveComputer = 0;
+            let goalH = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -1084,13 +1224,22 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
+            if (son.isGoal() && colorHuman > colorComputer) {
+              //gano humano
+              goalH = 100;
+            }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus -
-                optionMoveComputer
+                optionMoveComputer -
+                goalH
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -1152,6 +1301,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveComputer = 0;
+            let goalH = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -1165,13 +1315,22 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
+            if (son.isGoal() && colorHuman > colorComputer) {
+              //gano humano
+              goalH = 100;
+            }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus -
-                optionMoveComputer
+                optionMoveComputer -
+                goalH
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -1233,6 +1392,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveComputer = 0;
+            let goalH = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -1246,13 +1406,22 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
+            if (son.isGoal() && colorHuman > colorComputer) {
+              //gano humano
+              goalH = 100;
+            }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus -
-                optionMoveComputer
+                optionMoveComputer -
+                goalH
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -1315,6 +1484,7 @@ export class DepthAlgorithm {
             let colorComputer = 0;
             let bonus = 0;
             let optionMoveComputer = 0;
+            let goalH = 0;
             moveComputer = son.optionsMoveRedFunc(son.getHorsePosRed()); //opciones de movimiento del computador
             moveHuman = son.optionsMoveGreenFunc(son.getHorsePosGreen()); //opciones de movimiento del humano
             colorComputer = son.countColorsRedFunc(); //casillas pintadas del computador
@@ -1328,13 +1498,22 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
+            if (son.isGoal() && colorHuman > colorComputer) {
+              //gano humano
+              goalH = 100;
+            }
             son.setWeight(
               moveComputer -
                 moveHuman +
                 (colorComputer - colorHuman) +
                 bonus -
-                optionMoveComputer
+                optionMoveComputer -
+                goalH
             );
+            console.log("op compu", moveComputer);
+            console.log("op human", moveHuman);
+            console.log("color C", colorComputer);
+            console.log("color H", colorHuman);
             son.setCreate(false);
           }
           stack.unshift(son);
@@ -1350,6 +1529,9 @@ export class DepthAlgorithm {
     let completo = this.recorrido(arrayComplete);
     console.log(arrayComplete.length);
     console.log(completo);
+
+    let completo2 = this.recorrido2(arrayComplete);
+    console.log(completo2);
 
     //console.log("exp&&ido", expandedNodes + 1); // Good
     //console.log("profundidad", depth);

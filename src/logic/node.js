@@ -521,7 +521,7 @@ export class Node {
           countGreen++;
         }
 
-    this.setCountColorsGreen(countGreen);
+    this.setCountColorsGreen(countGreen + 1);
     return countGreen + 1;
   }
 
@@ -549,7 +549,7 @@ export class Node {
           countRed++;
         }
 
-    this.setCountColorsRed(countRed);
+    this.setCountColorsRed(countRed + 1);
     return countRed + 1;
   }
 }
