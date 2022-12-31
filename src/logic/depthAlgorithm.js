@@ -29,7 +29,7 @@ export class DepthAlgorithm {
     let num = 0;
     let state = [];
     do {
-      if (arr[num].getDepth() == 6) {
+      if (arr[num].getDepth() == 1) {
         state.push(arr[num].getStateW());
       }
 

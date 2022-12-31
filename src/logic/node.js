@@ -149,7 +149,7 @@ export class Node {
   }
 
   isGoal() {
-    stateW = this.stateW;
+    let stateW = this.stateW;
     for (let i = 0; i < 10; i++)
       for (let j = 0; j < 10; j++)
         if (stateW[i][j] == 0 || stateW[i][j] == 3) return false;
