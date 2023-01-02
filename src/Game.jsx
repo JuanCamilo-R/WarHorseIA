@@ -1,16 +1,40 @@
 import React from 'react';
 import './styles/App.css';
+import './styles/game.css';
 import Board from './Board';
+import { useState } from 'react';
 
-class Game extends React.Component {
-    render = () => {
-        return (
-            <div className="app">
-                <h1 className="title">⚔️ War horses 🐎</h1>
-                <Board />
-            </div>
-        );
-    }
-}
+export const Game = () => {
 
-export default Game;
+  const showBoard = (level) => {
+    setBoard(<Board level={level} />);
+  };
+
+  const ButtonSelectLevel = ({ title, icon, color, level }) => {
+    return (
+      <div
+        className="buttonSelectLevel"
+        onClick={() => { showBoard(level); }}
+        style={{ background: color }}
+      >
+        {title}
+        <div className="buttonSelectLevelIcon">{icon}</div>
+      </div>
+    );
+  }
+
+  const [board, setBoard] = useState(
+    <>
+      <br />
+      <div className='statusCaption'>Select a difficulty level:</div>
+      <br /><br />
+      <div className='gameBody'>
+        <ButtonSelectLevel title='Beginner' icon='🪅' color='#C5EAFF' level='2' />
+        <ButtonSelectLevel title='Amateur' icon='🎠' color='#CBD6FF' level='4' />
+        <ButtonSelectLevel title='Expert' icon='🏇' color='#FFCCE4' level='6' />
+      </div>
+    </>
+  );
+
+  return <>{board}</>;
+};

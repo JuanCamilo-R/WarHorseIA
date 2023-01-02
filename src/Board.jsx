@@ -25,6 +25,7 @@ class Board extends React.Component {
     }
 
     gameOver = false;
+
     // Sets the starting positions of the squares.
     setInitialPositions = () => {
         const squares = Array(GRIDHEIGHT * GRIDWIDTH).fill(['', 'free']);
@@ -57,6 +58,7 @@ class Board extends React.Component {
     }
 
     redFirstMove() {
+        this.props.level
         const squares = JSON.parse(JSON.stringify(this.state.squares));
         const horsePos = this.idToPos(this.state.redHorseId);
         squares[horsePos] = ['', 'red'];
@@ -69,7 +71,7 @@ class Board extends React.Component {
 
     // Executes actions when a square is clicked on.
     playerMove = (i, id) => {
-        //const squares = this.state.squares.slice();
+        
         const squares = JSON.parse(JSON.stringify(this.state.squares));
 
         if (!this.gameOver && squares[i][1] !== 'free') {

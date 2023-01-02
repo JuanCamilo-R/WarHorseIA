@@ -8,11 +8,14 @@
   border-radius: max(0.3vw, 4px);
   align-items: center;
   justify-content: center;
+  transition: all 0.1s;
 }
 
 .squareIcon {
   width: 80%;
   height: 80%;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .horseSquareSelected {

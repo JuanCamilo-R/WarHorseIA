@@ -1,0 +1,38 @@
+.gameBody {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    gap: max(2.22vw, 30px);
+    flex-wrap: wrap;
+}
+
+.buttonSelectLevel {
+    display: flex;
+    box-sizing: border-box;
+    width: 293px;
+    height: 60px;
+    border-radius: 10px;
+    border: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    transition: all 0.1s;
+    cursor: pointer;
+
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.125em;
+    color: #111111;
+}
+
+.buttonSelectLevelIcon {
+    font-size: 50px;
+}
+
+.buttonSelectLevel:hover {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.1);
+}
