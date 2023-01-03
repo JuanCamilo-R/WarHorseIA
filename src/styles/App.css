@@ -59,3 +59,25 @@
   font-size: max(2.6vmin, 1em);
   color: #111111;
 }
+
+.playAgainCaption {
+  border-radius: max(0.74vw, 10px);
+  border: 1px  red;
+  padding-left: 10px;
+  padding-right: 10px;
+  transition: all 0.1s;
+  cursor: pointer;
+  background: #ffcd68;
+  text-decoration: none;
+
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: max(2.6vmin, 1em);
+  color: #111111;
+}
+
+.playAgainCaption:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}

@@ -8,6 +8,14 @@
     flex-wrap: wrap;
 }
 
+.selectDifficultyCaption {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.125em;
+    color: #111111;
+}
+
 .buttonSelectLevel {
     display: flex;
     box-sizing: border-box;

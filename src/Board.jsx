@@ -296,7 +296,7 @@ class Board extends React.Component {
                 ? (this.state.redIsNext ? `Red's ` : `Green's `) + 'turn '
                 : winner;
 
-        const playAgain = winner === 'no winner yet' ? <></> : <><a href="./">Play again</a></>
+        const playAgain = winner === 'no winner yet' ? <></> : <><a className='playAgainCaption' href="./">Play again</a></>
 
         const squaresRows = [];
         // Creates and organizes all the squares.
@@ -326,9 +326,9 @@ class Board extends React.Component {
                     <div className="statusCaption">Green: {this.state.greenScore}</div>
                 </div>
                 <div className="board">{squaresRows}</div>
-                <div className="score"> 
+                <div className="score">
                     <div className="statusCaption">{status}</div>
-                    <div className="statusCaption">{playAgain}</div>
+                    {playAgain}
                 </div>
             </div>
         );

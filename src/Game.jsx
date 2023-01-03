@@ -26,7 +26,7 @@ export const Game = () => {
   const [board, setBoard] = useState(
     <>
       <br /><br />
-      <div className='statusCaption'>Select a difficulty level:</div>
+      <div className='selectDifficultyCaption'>Select a difficulty level:</div>
       <br />
       <div className='gameBody'>
         <ButtonSelectLevel title='Beginner' icon='🪅' color='#C5EAFF' level='2' />
