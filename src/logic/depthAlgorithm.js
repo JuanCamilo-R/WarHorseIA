@@ -16,7 +16,7 @@ export class DepthAlgorithm {
     let num = 0;
     let state = [];
     do {
-      if (arr[num].getDepth() == 6) {
+      if (arr[num].getDepth() == 3) {
         state.push(arr[num].getWeight());
       }
 
@@ -29,7 +29,7 @@ export class DepthAlgorithm {
     let num = 0;
     let state = [];
     do {
-      if (arr[num].getDepth() == 1) {
+      if (arr[num].getDepth() == 3) {
         state.push(arr[num].getStateW());
       }
 
@@ -62,8 +62,10 @@ export class DepthAlgorithm {
 
       //computador juega con el rojo
       //tablero de 8*8, el anterior era e 10*10
+      horsePosGreen = currentNode.searchForHorseGreen();
+      horsePosRed = currentNode.searchForHorseRed();
 
-      if (nivelGame % 2 == 0) {
+      if (currentNode.getRound() == 0) {
         //One
         console.log("aqui si");
         if (
@@ -94,13 +96,9 @@ export class DepthAlgorithm {
             son.paintBonusRed();
             son.setBonus(true);
           }
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+
+          son.setType("min");
+          son.setWeight(1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -108,6 +106,9 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica//peso
           son.searchForHorseGreen();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
+
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -151,7 +152,7 @@ export class DepthAlgorithm {
 
             son.setCreate(false); //ya no se crean mas nodos, este es el ultimo
           }
-
+          son.setRound(1);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -185,13 +186,9 @@ export class DepthAlgorithm {
             son.paintBonusRed();
             son.setBonus(true);
           }
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+
+          son.setType("min");
+          son.setWeight(1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -199,6 +196,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -242,7 +241,7 @@ export class DepthAlgorithm {
 
             son.setCreate(false);
           }
-
+          son.setRound(1);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -277,13 +276,8 @@ export class DepthAlgorithm {
             son.setBonus(true);
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("min");
+          son.setWeight(1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -291,6 +285,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -334,6 +330,7 @@ export class DepthAlgorithm {
 
             son.setCreate(false);
           }
+          son.setRound(1);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -368,13 +365,8 @@ export class DepthAlgorithm {
             son.setBonus(true);
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("min");
+          son.setWeight(1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -382,6 +374,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -420,6 +414,7 @@ export class DepthAlgorithm {
             );
             son.setCreate(false);
           }
+          son.setRound(1);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -453,13 +448,8 @@ export class DepthAlgorithm {
             son.setBonus(true);
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("min");
+          son.setWeight(1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -467,6 +457,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -509,6 +501,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(1);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -543,13 +536,8 @@ export class DepthAlgorithm {
             son.setBonus(true);
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("min");
+          son.setWeight(1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -557,6 +545,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -599,6 +589,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(1);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -646,6 +637,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -688,6 +681,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(1);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -722,13 +716,8 @@ export class DepthAlgorithm {
             son.setBonus(true);
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("min");
+          son.setWeight(1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -736,6 +725,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -778,6 +769,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(1);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -816,13 +808,8 @@ export class DepthAlgorithm {
             son.paintBonusGreen();
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("max");
+          son.setWeight(-1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -833,6 +820,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -875,6 +864,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(0);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -911,13 +901,8 @@ export class DepthAlgorithm {
             son.paintBonusGreen();
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("max");
+          son.setWeight(-1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -925,6 +910,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -967,6 +954,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(0);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -1003,13 +991,8 @@ export class DepthAlgorithm {
             son.paintBonusGreen();
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("max");
+          son.setWeight(-1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -1017,6 +1000,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1059,6 +1044,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(0);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -1095,13 +1081,8 @@ export class DepthAlgorithm {
             son.paintBonusGreen();
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("max");
+          son.setWeight(-1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -1109,6 +1090,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1151,6 +1134,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(0);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -1186,13 +1170,8 @@ export class DepthAlgorithm {
             son.paintBonusGreen();
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("max");
+          son.setWeight(-1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -1200,6 +1179,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1242,6 +1223,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(0);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -1277,13 +1259,8 @@ export class DepthAlgorithm {
             son.paintBonusGreen();
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("max");
+          son.setWeight(-1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -1291,6 +1268,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1333,6 +1312,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(0);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -1368,13 +1348,8 @@ export class DepthAlgorithm {
             son.paintBonusGreen();
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("max");
+          son.setWeight(-1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -1382,6 +1357,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1424,6 +1401,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(0);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -1460,13 +1438,8 @@ export class DepthAlgorithm {
             son.paintBonusGreen();
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("max");
+          son.setWeight(-1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
@@ -1474,6 +1447,8 @@ export class DepthAlgorithm {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
+          console.log("son estado", son.getStateW());
+          console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1516,6 +1491,7 @@ export class DepthAlgorithm {
             console.log("color H", colorHuman);
             son.setCreate(false);
           }
+          son.setRound(0);
           stack.unshift(son);
           arrayComplete.push(son);
         }
@@ -1526,12 +1502,12 @@ export class DepthAlgorithm {
     //solution = currentNode.recreateSolutionWorld();
     //solutionWorld = solution.reverse();
 
-    let completo = this.recorrido(arrayComplete);
-    console.log(arrayComplete.length);
-    console.log(completo);
+    //let completo = this.recorrido(arrayComplete);
+    //console.log(arrayComplete.length);
+    //console.log(completo);
 
-    let completo2 = this.recorrido2(arrayComplete);
-    console.log(completo2);
+    //let completo2 = this.recorrido2(arrayComplete);
+    //console.log(completo2);
 
     //console.log("exp&&ido", expandedNodes + 1); // Good
     //console.log("profundidad", depth);

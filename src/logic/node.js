@@ -22,10 +22,15 @@ export class Node {
     this.type = " "; //max or min
     this.weight; //valor inicial: infinity o -inifinity, si el ultimo le pongo el valor de la heuristica
     this.created = true; //puede crear un hijo
+    this.round = 0; //0 es computador, 1 es humano
   }
 
   getStateW() {
     return JSON.parse(JSON.stringify(this.stateW));
+  }
+
+  getRound() {
+    return this.round;
   }
 
   getCreate() {
@@ -86,6 +91,10 @@ export class Node {
 
   getSumCostHeuristic() {
     return this.sumCostHeuristic;
+  }
+
+  setRound(newRound) {
+    this.round = newRound;
   }
 
   setState(newState) {
