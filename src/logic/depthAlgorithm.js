@@ -16,7 +16,7 @@ export class DepthAlgorithm {
     let num = 0;
     let state = [];
     do {
-      if (arr[num].getDepth() == 3) {
+      if (arr[num].getDepth() == 4) {
         state.push(arr[num].getWeight());
       }
 
@@ -25,17 +25,62 @@ export class DepthAlgorithm {
     return state;
   }
 
-  recorrido2(arr) {
-    let num = 0;
-    let state = [];
-    do {
-      if (arr[num].getDepth() == 3) {
-        state.push(arr[num].getStateW());
+  finalMove(arrayDepthOne, result) {
+    for (let i = 0; i <= arrayDepthOne.length; i++) {
+      if (arrayDepthOne[i].getWeight() == result) {
+        return arrayDepthOne[i].getStateW();
       }
+    }
+  }
 
-      num++;
-    } while (arr.length - 1 != num - 1);
-    return state;
+  decisionMinMax(array) {
+    let num = 0;
+    let depthOne = [];
+    let max = 0;
+    let arrayCopy = array;
+    let arrDepth = [];
+    // console.log("length ", arrayCopy.length);
+    while (arrayCopy.length != 0) {
+      arrDepth = [];
+      arrayCopy.map((node) => arrDepth.push(node.getDepth()));
+      max = Math.max(...arrDepth);
+      // console.log("depth ", arrDepth);
+      // console.log("max ", max);
+      // console.log(arrayCopy[num].getDepth());
+      if (arrayCopy[num].getDepth() != -1) {
+        if (arrayCopy[num].getDepth() == max) {
+          if (arrayCopy[num].getFather().getType() == "min") {
+            if (
+              arrayCopy[num].getFather().getWeight() >
+              arrayCopy[num].getWeight()
+            ) {
+              arrayCopy[num].getFather().setWeight(arrayCopy[num].getWeight());
+            }
+          } else {
+            if (
+              arrayCopy[num].getFather().getWeight() <
+              arrayCopy[num].getWeight()
+            ) {
+              arrayCopy[num].getFather().setWeight(arrayCopy[num].getWeight());
+            }
+          }
+          if (arrayCopy[num].getDepth() == 1) {
+            depthOne.push(arrayCopy[num]);
+          }
+          if (arrayCopy[num].getDepth() == 0) {
+            return [arrayCopy[num].getWeight(), depthOne];
+          }
+          arrayCopy.splice(num, 1);
+          num = 0;
+        } else {
+          num++;
+        }
+        // console.log("length ", arrayCopy.length);
+        // console.log("num ", num);
+      }
+    }
+
+    return [arrayCopy[num].getWeight(), depthOne];
   }
 
   start() {
@@ -50,11 +95,11 @@ export class DepthAlgorithm {
     arrayComplete.push(currentNode);
 
     while (stack.length != 0) {
-      // //console.log("---");
+      // //// console.log("---");
       if (nivelGame % 2 == 0) {
-        ////console.log(currentNode.getHorsePosRed());
+        ////// console.log(currentNode.getHorsePosRed());
       } else {
-        ////console.log(currentNode.getHorsePosGreen()());
+        ////// console.log(currentNode.getHorsePosGreen()());
       }
 
       stack.shift();
@@ -67,7 +112,7 @@ export class DepthAlgorithm {
 
       if (currentNode.getRound() == 0) {
         //One
-        console.log("aqui si");
+        // console.log("aqui si");
         if (
           !(horsePosRed[0] - 2 < 0) &&
           !(horsePosRed[1] - 1 < 0) &&
@@ -102,12 +147,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosRed()());
+            //// console.log(son.getHorsePosRed()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica//peso
           son.searchForHorseGreen();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
 
           if (
             son.getDepth() == this.nivel ||
@@ -126,7 +171,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
@@ -145,10 +190,10 @@ export class DepthAlgorithm {
                 optionMoveHuman +
                 goal
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
 
             son.setCreate(false); //ya no se crean mas nodos, este es el ultimo
           }
@@ -192,12 +237,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosRed()());
+            //// console.log(son.getHorsePosRed()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -215,7 +260,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
@@ -234,10 +279,10 @@ export class DepthAlgorithm {
                 optionMoveHuman +
                 goal
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
 
             son.setCreate(false);
           }
@@ -281,12 +326,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosRed()());
+            //// console.log(son.getHorsePosRed()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -304,7 +349,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
@@ -323,10 +368,10 @@ export class DepthAlgorithm {
                 optionMoveHuman +
                 goal
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
 
             son.setCreate(false);
           }
@@ -370,12 +415,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosRed()());
+            //// console.log(son.getHorsePosRed()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -393,7 +438,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
@@ -453,12 +498,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosRed()());
+            //// console.log(son.getHorsePosRed()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -476,7 +521,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
@@ -495,10 +540,10 @@ export class DepthAlgorithm {
                 optionMoveHuman +
                 goal
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(1);
@@ -541,12 +586,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosRed()());
+            //// console.log(son.getHorsePosRed()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -564,7 +609,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
@@ -583,10 +628,10 @@ export class DepthAlgorithm {
                 optionMoveHuman +
                 goal
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(1);
@@ -623,22 +668,17 @@ export class DepthAlgorithm {
             son.setBonus(true);
           }
 
-          if (nivelGame % 2 == 0) {
-            son.setType("max");
-            son.setWeight(-1000);
-          } else {
-            son.setType("min");
-            son.setWeight(1000);
-          }
+          son.setType("min");
+          son.setWeight(1000);
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosRed()());
+            //// console.log(son.getHorsePosRed()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -656,7 +696,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
@@ -675,10 +715,10 @@ export class DepthAlgorithm {
                 optionMoveHuman +
                 goal
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(1);
@@ -721,12 +761,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosRed()());
+            //// console.log(son.getHorsePosRed()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseGreen();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0
@@ -744,7 +784,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) == 0 &&
               son.optionsMoveRedFunc(son.getHorsePosRed()) != 0
@@ -763,10 +803,10 @@ export class DepthAlgorithm {
                 optionMoveHuman +
                 goal
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(1);
@@ -776,7 +816,7 @@ export class DepthAlgorithm {
       } else {
         //le toca al humano
         //One
-        console.log("aqui no");
+        // console.log("aqui no");
         if (
           !(horsePosGreen[0] - 2 < 0) &&
           !(horsePosGreen[1] - 1 < 0) &&
@@ -813,15 +853,15 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosGreen()());
+            //// console.log(son.getHorsePosGreen()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           if (son.getDepth() == this.nivel) {
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -839,7 +879,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
@@ -858,10 +898,10 @@ export class DepthAlgorithm {
                 optionMoveComputer -
                 goalH
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(0);
@@ -906,12 +946,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosGreen()());
+            //// console.log(son.getHorsePosGreen()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -929,7 +969,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
@@ -948,10 +988,10 @@ export class DepthAlgorithm {
                 optionMoveComputer -
                 goalH
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(0);
@@ -996,12 +1036,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosGreen()());
+            //// console.log(son.getHorsePosGreen()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1019,7 +1059,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
@@ -1038,10 +1078,10 @@ export class DepthAlgorithm {
                 optionMoveComputer -
                 goalH
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(0);
@@ -1086,12 +1126,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosGreen()());
+            //// console.log(son.getHorsePosGreen()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1109,7 +1149,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
@@ -1128,10 +1168,10 @@ export class DepthAlgorithm {
                 optionMoveComputer -
                 goalH
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(0);
@@ -1175,12 +1215,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosGreen()());
+            //// console.log(son.getHorsePosGreen()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1198,7 +1238,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
@@ -1217,10 +1257,10 @@ export class DepthAlgorithm {
                 optionMoveComputer -
                 goalH
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(0);
@@ -1264,12 +1304,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosGreen()());
+            //// console.log(son.getHorsePosGreen()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1287,7 +1327,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
@@ -1306,10 +1346,10 @@ export class DepthAlgorithm {
                 optionMoveComputer -
                 goalH
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(0);
@@ -1353,12 +1393,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosGreen()());
+            //// console.log(son.getHorsePosGreen()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1376,7 +1416,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
@@ -1395,10 +1435,10 @@ export class DepthAlgorithm {
                 optionMoveComputer -
                 goalH
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(0);
@@ -1443,12 +1483,12 @@ export class DepthAlgorithm {
 
           if (son.getDepth() > depth) {
             depth = son.getDepth();
-            //console.log(son.getHorsePosGreen()());
+            //// console.log(son.getHorsePosGreen()());
           }
           //Es el ultim nodo entonces le debemos calcula la heuristica
           son.searchForHorseRed();
-          console.log("son estado", son.getStateW());
-          console.log("padre estado", currentNode.getStateW());
+          // console.log("son estado", son.getStateW());
+          // console.log("padre estado", currentNode.getStateW());
           if (
             son.getDepth() == this.nivel ||
             son.optionsMoveRedFunc(son.getHorsePosRed()) == 0
@@ -1466,7 +1506,7 @@ export class DepthAlgorithm {
             colorHuman = son.countColorsGreenFunc(); //casillas pintadas del humano
             //falta si cogio bono dependiendo de la profundidad sume mas
             bonus = son.getHeuristicBonus();
-            console.log("Bonus heuristic: ", bonus);
+            // console.log("Bonus heuristic: ", bonus);
             if (
               son.optionsMoveRedFunc(son.getHorsePosRed()) == 0 &&
               son.optionsMoveGreenFunc(son.getHorsePosGreen()) != 0
@@ -1485,10 +1525,10 @@ export class DepthAlgorithm {
                 optionMoveComputer -
                 goalH
             );
-            console.log("op compu", moveComputer);
-            console.log("op human", moveHuman);
-            console.log("color C", colorComputer);
-            console.log("color H", colorHuman);
+            // console.log("op compu", moveComputer);
+            // console.log("op human", moveHuman);
+            // console.log("color C", colorComputer);
+            // console.log("color H", colorHuman);
             son.setCreate(false);
           }
           son.setRound(0);
@@ -1499,19 +1539,9 @@ export class DepthAlgorithm {
       currentNode = stack[0];
       nivelGame++;
     }
-    //solution = currentNode.recreateSolutionWorld();
-    //solutionWorld = solution.reverse();
+    //Aquí
 
-    //let completo = this.recorrido(arrayComplete);
-    //console.log(arrayComplete.length);
-    //console.log(completo);
-
-    //let completo2 = this.recorrido2(arrayComplete);
-    //console.log(completo2);
-
-    //console.log("exp&&ido", expandedNodes + 1); // Good
-    //console.log("profundidad", depth);
-    ////console.log(stack[0].recreateSolution());
-    //return solutionWorld;
+    let resultado = this.decisionMinMax(arrayComplete.reverse());
+    return this.finalMove(resultado[1], resultado[0]);
   }
 }

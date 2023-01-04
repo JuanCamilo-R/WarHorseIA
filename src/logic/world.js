@@ -170,9 +170,3 @@ export class World {
     return Math.floor(Math.random() * 7);
   }
 }
-
-let newWorld = new World();
-
-newWorld.fillWorld();
-
-newWorld.printWorld();
