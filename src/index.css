@@ -5,6 +5,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1 {
+  margin: 10px;
+}
+
 @media (max-width: 1200px) {
   body {
     font-size: 15px;

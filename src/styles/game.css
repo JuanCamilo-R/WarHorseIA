@@ -38,6 +38,8 @@
 
 .buttonSelectLevelIcon {
     font-size: 50px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .buttonSelectLevel:hover {

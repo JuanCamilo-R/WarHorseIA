@@ -6,15 +6,18 @@ import { useState } from 'react';
 
 export const Game = () => {
 
-  const showBoard = (level) => {
+  const showBoard = (level, icon) => {
+    setIcon(icon);
     setBoard(<Board level={level} />);
   };
+
+  const [icon, setIcon] = useState('🐎');
 
   const ButtonSelectLevel = ({ title, icon, color, level }) => {
     return (
       <div
         className="buttonSelectLevel"
-        onClick={() => { showBoard(level); }}
+        onClick={() => { showBoard(level, icon); }}
         style={{ background: color }}
       >
         {title}
@@ -36,5 +39,10 @@ export const Game = () => {
     </>
   );
 
-  return <>{board}</>;
+  return (
+    <>
+      <h1 className="title">⚔️ War horses {icon}</h1>
+      {board}
+    </>
+  );
 };

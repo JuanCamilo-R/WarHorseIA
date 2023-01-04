@@ -321,12 +321,14 @@ class Board extends React.Component {
 
         return (
             <div className="appBody">
-                <div className="score">
-                    <div className="statusCaption">Red: {this.state.redScore}</div>
-                    <div className="statusCaption">Green: {this.state.greenScore}</div>
+                <div>
+                    <div className="scoreContainer">
+                        <div title='Red' className="redScore">{this.state.redScore}</div>
+                        <div title='Green' className="greenScore">{this.state.greenScore}</div>
+                    </div>
+                    <div className="board">{squaresRows}</div>
                 </div>
-                <div className="board">{squaresRows}</div>
-                <div className="score">
+                <div className="status">
                     <div className="statusCaption">{status}</div>
                     {playAgain}
                 </div>
