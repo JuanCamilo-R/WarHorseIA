@@ -8,6 +8,14 @@
     flex-wrap: wrap;
 }
 
+.selectDifficultyCaption {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.125em;
+    color: #111111;
+}
+
 .buttonSelectLevel {
     display: flex;
     box-sizing: border-box;
@@ -30,9 +38,11 @@
 
 .buttonSelectLevelIcon {
     font-size: 50px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .buttonSelectLevel:hover {
-    -webkit-transform: scale(1.2);
+    -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
