@@ -157,12 +157,15 @@ export class Node {
     this.horsePosGreen = newhorsePosGreen;
   }
 
-  isGoal() {
-    let stateW = this.stateW;
-    for (let i = 0; i < 10; i++)
-      for (let j = 0; j < 10; j++)
-        if (stateW[i][j] == 0 || stateW[i][j] == 3) return false;
-    return true;
+  isEndMove() {
+    if (
+      this.optionsMoveGreenFunc(this.getHorsePosGreen()) == 0 ||
+      this.optionsMoveRedFunc(this.getHorsePosRed()) == 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   calculateHeuristic(sum) {
