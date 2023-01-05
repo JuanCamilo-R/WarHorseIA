@@ -41,46 +41,50 @@ export class DepthAlgorithm {
     let arrDepth = [];
     // console.log("length ", arrayCopy.length);
     while (arrayCopy.length != 0) {
+      console.log("arrayCopy length: ", arrayCopy.length);
       arrDepth = [];
       arrayCopy.map((node) => arrDepth.push(node.getDepth()));
       max = Math.max(...arrDepth);
+      let index = arrayCopy.findIndex((node) => node.getDepth() == max);
       // console.log("depth ", arrDepth);
       // console.log("max ", max);
       // console.log(arrayCopy[num].getDepth());
-      if (arrayCopy[num].getDepth() != -1) {
-        if (arrayCopy[num].getDepth() == max) {
-          if (arrayCopy[num].getFather().getType() == "min") {
+
+      if (arrayCopy[index].getDepth() != -1) {
+        if (arrayCopy[index].getDepth() == max) {
+          if (arrayCopy[index].getFather().getType() == "min") {
             if (
-              arrayCopy[num].getFather().getWeight() >
-              arrayCopy[num].getWeight()
+              arrayCopy[index].getFather().getWeight() >
+              arrayCopy[index].getWeight()
             ) {
-              arrayCopy[num].getFather().setWeight(arrayCopy[num].getWeight());
+              arrayCopy[index]
+                .getFather()
+                .setWeight(arrayCopy[index].getWeight());
             }
           } else {
             if (
-              arrayCopy[num].getFather().getWeight() <
-              arrayCopy[num].getWeight()
+              arrayCopy[index].getFather().getWeight() <
+              arrayCopy[index].getWeight()
             ) {
-              arrayCopy[num].getFather().setWeight(arrayCopy[num].getWeight());
+              arrayCopy[index]
+                .getFather()
+                .setWeight(arrayCopy[index].getWeight());
             }
           }
-          if (arrayCopy[num].getDepth() == 1) {
-            depthOne.push(arrayCopy[num]);
+          if (arrayCopy[index].getDepth() == 1) {
+            depthOne.push(arrayCopy[index]);
           }
-          if (arrayCopy[num].getDepth() == 0) {
-            return [arrayCopy[num].getWeight(), depthOne];
+          if (arrayCopy[index].getDepth() == 0) {
+            return [arrayCopy[index].getWeight(), depthOne];
           }
-          arrayCopy.splice(num, 1);
-          num = 0;
-        } else {
-          num++;
+          arrayCopy.splice(index, 1);
         }
         // console.log("length ", arrayCopy.length);
         // console.log("num ", num);
       }
     }
 
-    return [arrayCopy[num].getWeight(), depthOne];
+    return [arrayCopy[index].getWeight(), depthOne];
   }
 
   start() {
@@ -1540,8 +1544,11 @@ export class DepthAlgorithm {
       nivelGame++;
     }
     //Aquí
-
+    console.log("Inicia decisionMinMax: ");
+    console.log("len arrayComplete: ", arrayComplete.length);
     let resultado = this.decisionMinMax(arrayComplete.reverse());
+    console.log("Termina decisionMinMax");
+    console.log("Inicia finalMove");
     return this.finalMove(resultado[1], resultado[0]);
   }
 }
