@@ -41,21 +41,6 @@ class Board extends React.Component {
         );
     }
 
-    /*
-    redFirstMove = () => {
-
-        const algorithm = new DepthAlgorithm(initialWorld, this.props.level);
-        const solution = algorithm.start();
-
-        const squares = this.convertWorld(solution);
-        const newHorseId = this.searchRedHorse(solution);
-
-        this.setState({
-            redHorseId: newHorseId, squares: squares,
-            redIsNext: false, redScore: 2,
-        });
-    }*/
-
     moveRed = async (list) => {
 
         const squares = JSON.parse(JSON.stringify(list));

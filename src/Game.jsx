@@ -3,6 +3,11 @@ import './styles/App.css';
 import './styles/game.css';
 import Board from './Board';
 import { useState } from 'react';
+import beginnerIcon from './assets/beginner.svg';
+import amateurIcon from './assets/amateur.svg';
+import expertIcon from './assets/expert.svg';
+import swordsIcon from './assets/swords.svg';
+import horseIcon from './assets/horse.svg';
 
 export const Game = () => {
 
@@ -11,7 +16,7 @@ export const Game = () => {
     setBoard(<Board level={level} />);
   };
 
-  const [icon, setIcon] = useState('🐎');
+  const [icon, setIcon] = useState(horseIcon);
 
   const ButtonSelectLevel = ({ title, icon, color, level }) => {
     return (
@@ -21,8 +26,8 @@ export const Game = () => {
         style={{ background: color }}
       >
         {title}
-        <div className="buttonSelectLevelIcon">{icon}</div>
-      </div>
+        <img className="buttonSelectLevelIcon" alt={title} src={icon} /></div>
+
     );
   }
 
@@ -32,16 +37,20 @@ export const Game = () => {
       <div className='selectDifficultyCaption'>Select a difficulty level:</div>
       <br />
       <div className='gameBody'>
-        <ButtonSelectLevel title='Beginner' icon='🪅' color='#C5EAFF' level='2' />
-        <ButtonSelectLevel title='Amateur' icon='🎠' color='#CBD6FF' level='4' />
-        <ButtonSelectLevel title='Expert' icon='🏇' color='#FFCCE4' level='6' />
+        <ButtonSelectLevel title='Beginner' icon={beginnerIcon} color='#C5EAFF' level='2' />
+        <ButtonSelectLevel title='Amateur' icon={amateurIcon} color='#CBD6FF' level='4' />
+        <ButtonSelectLevel title='Expert' icon={expertIcon} color='#FFCCE4' level='6' />
       </div>
     </>
   );
 
   return (
     <>
-      <h1 className="title">⚔️ War horses {icon}</h1>
+      <div className='titleContainer'>
+        <img className="tittleIcon" alt="Hourse" src={swordsIcon} />
+        <h1 className="title"> War horses </h1>
+        <img className="tittleIcon" alt="Hourse" src={icon} />
+      </div>
       {board}
     </>
   );
