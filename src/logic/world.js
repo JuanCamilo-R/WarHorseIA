@@ -167,6 +167,6 @@ export class World {
   }
 
   getRandom() {
-    return Math.floor(Math.random() * 7);
+    return Math.floor(Math.random() * 8);
   }
 }

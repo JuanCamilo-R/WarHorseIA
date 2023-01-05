@@ -31,7 +31,8 @@
   gap: max(0.74vw, 8px);
   background: #C6D6E9;
   padding: max(0.74vw, 8px);
-  border-radius: max(0.74vw, 8px);
+  border-bottom-left-radius: max(0.74vw, 8px);
+  border-bottom-right-radius: max(0.74vw, 8px);
 }
 
 .appBody {
@@ -57,7 +58,7 @@
   justify-content: center;
   width: 49.8%;
   background: #FF4547;
-  border-radius: max(0.74vw, 8px);
+  border-top-left-radius: max(0.74vw, 8px);
 
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-style: normal;
@@ -72,7 +73,7 @@
   justify-content: center;
   width: 49.8%;
   background: #51C529;
-  border-radius: max(0.74vw, 8px);
+  border-top-right-radius: max(0.74vw, 8px);
 
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-style: normal;
