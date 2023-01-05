@@ -20,7 +20,7 @@ export class Node {
     this.heuristic = 0; // para el nodo final,  No lo estoy usando
     this.bonus = false;
     this.type = " "; //max or min
-    this.weight; //valor inicial: infinity o -inifinity, si el ultimo le pongo el valor de la heuristica
+    this.weight = -1000; //valor inicial: infinity o -inifinity, si el ultimo le pongo el valor de la heuristica
     this.created = true; //puede crear un hijo
     this.round = 0; //0 es computador, 1 es humano
   }
@@ -201,8 +201,8 @@ export class Node {
   }
 
   recreateSolutionWorld() {
-    directions = [];
-    currentNode = this;
+    let directions = [];
+    let currentNode = this;
     while (currentNode.getOperator() != "first father") {
       directions.append(currentNode.getStateW());
       currentNode = currentNode.getFather();

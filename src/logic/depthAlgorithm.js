@@ -37,6 +37,7 @@ export class DepthAlgorithm {
     let num = 0;
     let depthOne = [];
     let max = 0;
+    let index = 0;
     let arrayCopy = array;
     let arrDepth = [];
     // console.log("length ", arrayCopy.length);
@@ -45,7 +46,7 @@ export class DepthAlgorithm {
       arrDepth = [];
       arrayCopy.map((node) => arrDepth.push(node.getDepth()));
       max = Math.max(...arrDepth);
-      let index = arrayCopy.findIndex((node) => node.getDepth() == max);
+      index = arrayCopy.findIndex((node) => node.getDepth() == max);
       // console.log("depth ", arrDepth);
       // console.log("max ", max);
       // console.log(arrayCopy[num].getDepth());
