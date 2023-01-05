@@ -183,7 +183,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
             }
-            if (son.isGoal() && colorComputer > colorHuman) {
+            if (son.isEndMove() && colorComputer > colorHuman) {
               //gano computador
               goal = 100;
             }
@@ -272,7 +272,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
             }
-            if (son.isGoal() && colorComputer > colorHuman) {
+            if (son.isEndMove() && colorComputer > colorHuman) {
               //gano computador
               goal = 100;
             }
@@ -361,7 +361,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
             }
-            if (son.isGoal() && colorComputer > colorHuman) {
+            if (son.isEndMove() && colorComputer > colorHuman) {
               //gano computador
               goal = 100;
             }
@@ -450,7 +450,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
             }
-            if (son.isGoal() && colorComputer > colorHuman) {
+            if (son.isEndMove() && colorComputer > colorHuman) {
               //gano computador
               goal = 100;
             }
@@ -533,7 +533,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
             }
-            if (son.isGoal() && colorComputer > colorHuman) {
+            if (son.isEndMove() && colorComputer > colorHuman) {
               //gano computador
               goal = 100;
             }
@@ -621,7 +621,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
             }
-            if (son.isGoal() && colorComputer > colorHuman) {
+            if (son.isEndMove() && colorComputer > colorHuman) {
               //gano computador
               goal = 100;
             }
@@ -708,7 +708,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
             }
-            if (son.isGoal() && colorComputer > colorHuman) {
+            if (son.isEndMove() && colorComputer > colorHuman) {
               //gano computador
               goal = 100;
             }
@@ -796,7 +796,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveHuman = 12; // se le suma mas porque el humano se quedo sin movimientos
             }
-            if (son.isGoal() && colorComputer > colorHuman) {
+            if (son.isEndMove() && colorComputer > colorHuman) {
               //gano computador
               goal = 100;
             }
@@ -891,7 +891,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
-            if (son.isGoal() && colorHuman > colorComputer) {
+            if (son.isEndMove() && colorHuman > colorComputer) {
               //gano humano
               goalH = 100;
             }
@@ -981,7 +981,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
-            if (son.isGoal() && colorHuman > colorComputer) {
+            if (son.isEndMove() && colorHuman > colorComputer) {
               //gano humano
               goalH = 100;
             }
@@ -1071,7 +1071,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
-            if (son.isGoal() && colorHuman > colorComputer) {
+            if (son.isEndMove() && colorHuman > colorComputer) {
               //gano humano
               goalH = 100;
             }
@@ -1161,7 +1161,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
-            if (son.isGoal() && colorHuman > colorComputer) {
+            if (son.isEndMove() && colorHuman > colorComputer) {
               //gano humano
               goalH = 100;
             }
@@ -1250,7 +1250,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
-            if (son.isGoal() && colorHuman > colorComputer) {
+            if (son.isEndMove() && colorHuman > colorComputer) {
               //gano humano
               goalH = 100;
             }
@@ -1339,7 +1339,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
-            if (son.isGoal() && colorHuman > colorComputer) {
+            if (son.isEndMove() && colorHuman > colorComputer) {
               //gano humano
               goalH = 100;
             }
@@ -1428,7 +1428,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
-            if (son.isGoal() && colorHuman > colorComputer) {
+            if (son.isEndMove() && colorHuman > colorComputer) {
               //gano humano
               goalH = 100;
             }
@@ -1518,7 +1518,7 @@ export class DepthAlgorithm {
             ) {
               optionMoveComputer = 6;
             }
-            if (son.isGoal() && colorHuman > colorComputer) {
+            if (son.isEndMove() && colorHuman > colorComputer) {
               //gano humano
               goalH = 100;
             }
