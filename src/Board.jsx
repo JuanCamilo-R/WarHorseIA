@@ -2,23 +2,24 @@ import React from 'react';
 import './styles/App.css';
 import { Square } from './Square';
 import { World } from "./logic/world.js";
+import { DepthAlgorithm } from "./logic/depthAlgorithm.js";
 
 const GRIDHEIGHT = 8;
 const GRIDWIDTH = 8;
 
-let newWorlds = new World();
-newWorlds.fillWorld();
-const newWorld = newWorlds.world;
-//newWorlds.printWorld();
+// Initial world
+const newWorld = new World();
+newWorld.fillWorld();
+const initialWorld = newWorld.getWorld()
 
 class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            squares: this.setInitialPositions(),
+            squares: this.setInitialPositions(initialWorld),
             redIsNext: true,
-            redHorseId: `${newWorlds.redHorse[0]},${newWorlds.redHorse[1]}`,
-            greenHorseId: `${newWorlds.greenHorse[0]},${newWorlds.greenHorse[1]}`,
+            redHorseId: `${newWorld.redHorse[0]},${newWorld.redHorse[1]}`,
+            greenHorseId: `${newWorld.greenHorse[0]},${newWorld.greenHorse[1]}`,
             redScore: 1,
             greenScore: 1,
         };
@@ -27,8 +28,74 @@ class Board extends React.Component {
     gameOver = false;
 
     // Sets the starting positions of the squares.
-    setInitialPositions = () => {
-        const squares = Array(GRIDHEIGHT * GRIDWIDTH).fill(['', 'free']);
+    setInitialPositions = (world) => {
+        const squares = this.convertWorld(world);
+        return squares;
+    }
+
+
+    componentDidMount = () => {
+        setTimeout(
+            () => this.moveRed(this.state.squares),
+            1000
+        );
+    }
+
+    /*
+    redFirstMove = () => {
+
+        const algorithm = new DepthAlgorithm(initialWorld, this.props.level);
+        const solution = algorithm.start();
+
+        const squares = this.convertWorld(solution);
+        const newHorseId = this.searchRedHorse(solution);
+
+        this.setState({
+            redHorseId: newHorseId, squares: squares,
+            redIsNext: false, redScore: 2,
+        });
+    }*/
+
+    moveRed = async (list) => {
+
+        const squares = JSON.parse(JSON.stringify(list));
+
+        const world = this.convertToMatrix(squares);
+        const algorithm = new DepthAlgorithm(world, this.props.level);
+        const solution = await algorithm.start();
+
+        const solutionSquares = this.convertWorld(solution);
+        const newRedHorseId = this.searchRedHorse(solution);
+
+        let score = 1;
+        const newRedHorsePos = this.idToPos(newRedHorseId);
+        if (squares[newRedHorsePos][0] === 'bonus') {
+            const posibleSquares = this.adjacentSquares(newRedHorseId, squares);
+            score += posibleSquares.length;
+        }
+
+        this.setState({
+            redHorseId: newRedHorseId, squares: solutionSquares,
+            redScore: this.state.redScore + score,
+        });
+
+        // Checks if the green player can move.
+        if (this.knightMoves(this.state.greenHorseId, solutionSquares, 'free').length > 0) {
+            this.setState({ redIsNext: false, });
+        }
+
+        // If the green player cannot move, checks if the red player can play again.
+        else if (this.knightMoves(newRedHorseId, solutionSquares, 'free').length > 0) {
+            setTimeout(
+                () => this.moveRed(solutionSquares),
+                1000
+            );
+        }
+    }
+
+    // Converts a world matrix to a list with the interface values.
+    convertWorld = (world) => {
+        const converted = Array(GRIDHEIGHT * GRIDWIDTH);
 
         const position = {
             0: ['', 'free'],
@@ -42,46 +109,81 @@ class Board extends React.Component {
 
         for (let i = 0; i < GRIDHEIGHT; i++) {
             for (let j = 0; j < GRIDWIDTH; j++) {
-                squares[i * GRIDWIDTH + j] = position[newWorld[i][j]] ?? position['default'];
+                converted[i * GRIDWIDTH + j] = position[world[i][j]] ?? position['default'];
             }
         }
 
-        return squares;
+        return converted;
     }
 
-    /*
-    componentDidMount() {
-        setTimeout(
-            () => this.redFirstMove(),
-            1000
-        );
+    // Converts a world list to a matrix with the logic values.
+    convertToMatrix = (squares) => {
+        let world = Array(GRIDHEIGHT).fill(Array(GRIDWIDTH));
+        world = JSON.parse(JSON.stringify(world));
+
+        for (let i = 0; i < GRIDHEIGHT; i++) {
+            for (let j = 0; j < GRIDWIDTH; j++) {
+                const index = i * GRIDWIDTH + j;
+
+                if (squares[index][0] === '' && squares[index][1] === 'free') {
+                    world[i][j] = 0;
+                }
+
+                else if (squares[index][0] === 'horse' && squares[index][1] === 'red') {
+                    world[i][j] = 1;
+                }
+
+                else if (squares[index][0] === 'horse' && squares[index][1] === 'green') {
+                    world[i][j] = 2;
+                }
+
+                else if (squares[index][0] === 'bonus' && squares[index][1] === 'free') {
+                    world[i][j] = 3;
+                }
+
+                else if (squares[index][0] === '' && squares[index][1] === 'red') {
+                    world[i][j] = 4;
+                }
+
+                else if (squares[index][0] === '' && squares[index][1] === 'green') {
+                    world[i][j] = 5;
+                }
+
+                else {
+                    world[i][j] = 0;
+                }
+
+            }
+        }
+
+        return world;
     }
 
-    redFirstMove() {
-        this.props.level
-        const squares = JSON.parse(JSON.stringify(this.state.squares));
-        const horsePos = this.idToPos(this.state.redHorseId);
-        squares[horsePos] = ['', 'red'];
-        squares[0] = ['horse', 'red'];
-        
-        this.setState({ redHorseId: '0,0', squares: squares, 
-            redIsNext: false, redScore: this.state.redScore +1, });
+    searchRedHorse = (world) => {
+        let id;
+        for (let i = 0; i < GRIDHEIGHT; i++) {
+            for (let j = 0; j < GRIDWIDTH; j++) {
+                if (world[i][j] === 1) {
+                    id = `${i},${j}`;
+                    return id;
+                }
+            }
+        }
+        return id;
     }
-    */
 
     // Executes actions when a square is clicked on.
     playerMove = (i, id) => {
 
         const squares = JSON.parse(JSON.stringify(this.state.squares));
 
-        if (!this.gameOver && squares[i][1] !== 'free') {
+        if (!this.gameOver && !this.state.redIsNext && squares[i][1] !== 'free') {
 
-            const turn = this.state.redIsNext ? 'red' : 'green'
-            const horseId = turn === 'red' ? this.state.redHorseId : this.state.greenHorseId;
+            const horseId = this.state.greenHorseId;
 
             // Horse.
-            if (squares[i][0] === 'horse' && squares[i][1] === turn) {
-                squares[i] = ['horse-selected', turn];
+            if (squares[i][0] === 'horse' && squares[i][1] === 'green') {
+                squares[i] = ['horse-selected', 'green'];
                 const posibleMoves = this.knightMoves(id, squares, 'free');
                 for (let a = 0; a < posibleMoves.length; a++) {
                     const index = posibleMoves[a];
@@ -92,8 +194,8 @@ class Board extends React.Component {
             }
 
             // Horse selected.
-            else if (squares[i][0] === 'horse-selected' && squares[i][1] === turn) {
-                squares[i] = ['horse', turn];
+            else if (squares[i][0] === 'horse-selected' && squares[i][1] === 'green') {
+                squares[i] = ['horse', 'green'];
                 const posibleMoves = this.knightMoves(id, squares, 'free-dark');
                 for (let a = 0; a < posibleMoves.length; a++) {
                     const index = posibleMoves[a];
@@ -113,24 +215,21 @@ class Board extends React.Component {
                 }
 
                 const horsePos = this.idToPos(horseId);
-                squares[horsePos] = ['', turn];
+                squares[horsePos] = ['', 'green'];
 
-                squares[i] = ['horse', turn];
+                squares[i] = ['horse', 'green'];
 
-                this.setState({ squares: squares, });
-                if (turn === 'red') {
-                    this.setState({ redHorseId: id, redScore: this.state.redScore + 1, });
+                this.setState({
+                    squares: squares, greenHorseId: id, greenScore: this.state.greenScore + 1,
+                });
 
-                    if (this.knightMoves(this.state.greenHorseId, squares, 'free').length > 0) {
-                        this.setState({ redIsNext: false, });
-                    }
-
-                } else {
-                    this.setState({ greenHorseId: id, greenScore: this.state.greenScore + 1, });
-
-                    if (this.knightMoves(this.state.redHorseId, squares, 'free').length > 0) {
-                        this.setState({ redIsNext: true, });
-                    }
+                // Checks if the red player can move.
+                if (this.knightMoves(this.state.redHorseId, squares, 'free').length > 0) {
+                    this.setState({ redIsNext: true, });
+                    setTimeout(
+                        () => this.moveRed(squares),
+                        1000
+                    );
                 }
             }
 
@@ -147,29 +246,26 @@ class Board extends React.Component {
                 const posibleSquares = this.adjacentSquares(id, squares);
                 for (let a = 0; a < posibleSquares.length; a++) {
                     const index = posibleSquares[a];
-                    squares[index] = ['', turn];
+                    squares[index] = ['', 'green'];
                     score++;
                 }
 
                 const horsePos = this.idToPos(horseId);
-                squares[horsePos] = ['', turn];
+                squares[horsePos] = ['', 'green'];
 
-                squares[i] = ['horse', turn];
+                squares[i] = ['horse', 'green'];
 
-                this.setState({ squares: squares, });
-                if (turn === 'red') {
-                    this.setState({ redHorseId: id, redScore: this.state.redScore + score, });
+                this.setState({
+                    squares: squares, greenHorseId: id, greenScore: this.state.greenScore + score,
+                });
 
-                    if (this.knightMoves(this.state.greenHorseId, squares, 'free').length > 0) {
-                        this.setState({ redIsNext: false, });
-                    }
-
-                } else {
-                    this.setState({ greenHorseId: id, greenScore: this.state.greenScore + score, });
-
-                    if (this.knightMoves(this.state.redHorseId, squares, 'free').length > 0) {
-                        this.setState({ redIsNext: true, });
-                    }
+                // Checks if the red player can move.
+                if (this.knightMoves(this.state.redHorseId, squares, 'free').length > 0) {
+                    this.setState({ redIsNext: true, });
+                    setTimeout(
+                        () => this.moveRed(squares),
+                        1000
+                    );
                 }
             }
         }
@@ -296,7 +392,10 @@ class Board extends React.Component {
                 ? (this.state.redIsNext ? `Red's ` : `Green's `) + 'turn '
                 : winner;
 
-        const playAgain = winner === 'no winner yet' ? <></> : <><a className='playAgainCaption' href="./">Play again</a></>
+        const playAgain =
+            winner === 'no winner yet'
+                ? <></>
+                : <><a className='playAgainCaption' href="./">Play again</a></>;
 
         const squaresRows = [];
         // Creates and organizes all the squares.
