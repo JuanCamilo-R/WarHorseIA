@@ -37,9 +37,9 @@ export const Game = () => {
       <div className='selectDifficultyCaption'>Select a difficulty level:</div>
       <br />
       <div className='gameBody'>
-        <ButtonSelectLevel title='Beginner' icon={beginnerIcon} color='#C5EAFF' level='2' />
-        <ButtonSelectLevel title='Amateur' icon={amateurIcon} color='#CBD6FF' level='4' />
-        <ButtonSelectLevel title='Expert' icon={expertIcon} color='#FFCCE4' level='6' />
+        <ButtonSelectLevel title='Beginner' icon={beginnerIcon} color='#C5EAFF' level={2} />
+        <ButtonSelectLevel title='Amateur' icon={amateurIcon} color='#CBD6FF' level={4} />
+        <ButtonSelectLevel title='Expert' icon={expertIcon} color='#FFCCE4' level={6} />
       </div>
     </>
   );
